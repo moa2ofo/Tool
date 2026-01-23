@@ -24,19 +24,18 @@
 #define TOOL_STATUS_OVF_U32 (1U << 2U)
 #define TOOL_STATUS_UDF_U32 (1U << 3U)
 
-#define TOOL_CRC_INIT_U32         (0xFFFFFFFFUL)
-#define TOOL_CRC_POLY_U32         (0xEDB88320UL)
+#define TOOL_CRC_INIT_U32 (0xFFFFFFFFUL)
+#define TOOL_CRC_POLY_U32 (0xEDB88320UL)
 
 /*==================[local data]=============================================*/
 
 /* File-static variables: no prefix and PascalCasing (per naming convention). */
-extern uint8_t     Buffer_u8[TOOL_BUFFER_SIZE_U32];
-extern uint32_t    Head_u32;
-extern uint32_t    Tail_u32;
-extern uint32_t    Count_u32;
+extern uint8_t Buffer_u8[TOOL_BUFFER_SIZE_U32];
+extern uint32_t Head_u32;
+extern uint32_t Tail_u32;
+extern uint32_t Count_u32;
 
-extern uint32_t    StatusFlg_u32;
-
+extern uint32_t StatusFlg_u32;
 
 /*==================[types]==================================================*/
 
@@ -492,8 +491,6 @@ uint8_t Tool_Push_u8(uint8_t value_u8);
  * - 3: NULL output pointer
  */
 uint8_t Tool_Pop_u8(uint8_t *value_pu8);
-
-
 
 /**
  * @brief Run a lightweight self-test on Tool internal state.

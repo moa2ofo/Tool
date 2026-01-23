@@ -2,13 +2,13 @@
 #include "Tool_Clear.h"
 #include "Tool.h"
 
- uint8_t     Buffer_u8[TOOL_BUFFER_SIZE_U32] = {0};
- uint32_t    Head_u32 = 0;
- uint32_t    Tail_u32 = 0;
- uint32_t    Count_u32 = 0;
+uint8_t Buffer_u8[TOOL_BUFFER_SIZE_U32] = {0};
+uint32_t Head_u32 = 0;
+uint32_t Tail_u32 = 0;
+uint32_t Count_u32 = 0;
 
- uint32_t    StatusFlg_u32= 0;
- Tool_mode_e Mode_e = Tool_modeIdle_e;
+uint32_t StatusFlg_u32 = 0;
+Tool_mode_e Mode_e = Tool_modeIdle_e;
 /* FUNCTION TO TEST */
 
 
