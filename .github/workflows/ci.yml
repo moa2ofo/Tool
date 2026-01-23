@@ -1,0 +1,173 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  format_and_unit_tests:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Rome
+    if: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Pull early to avoid "unstaged changes" rebase errors
+      - name: Sync branch with remote (push only)
+        if: github.event_name == 'push'
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git pull --rebase
+
+      # -----------------------------
+      # clang-format (always runs)
+      # -----------------------------
+      - name: Install clang-format
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format
+
+      - name: Run clang-format on all .c and .h files
+        id: clang_format
+        run: |
+          find . -type f \( -name "*.c" -o -name "*.h" \) \
+            -not -path "./build/*" \
+            -not -path "./.git/*" \
+            -exec clang-format -i {} \;
+
+      # -----------------------------
+      # Get unitTestLauncher repo
+      # -----------------------------
+      - name: Checkout unitTestLauncher repo
+        uses: actions/checkout@v4
+        with:
+          repository: moa2ofo/unitTestLauncher
+          path: unitTestLauncher
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Verify Docker is available
+        id: docker_info
+        continue-on-error: true
+        run: sudo docker info
+
+      # -----------------------------
+      # swCmpBuildCheck (always runs)
+      # -----------------------------
+      - name: Run swCmpBuildCheck (launcher repo)
+        id: sw_cmp_build_check
+        continue-on-error: true
+        run: |
+          sudo -E python3 unitTestLauncher/swCmpBuildCheck.py
+
+      # -----------------------------
+      # Unit tests (always runs)
+      # -----------------------------
+      - name: Fix permissions for unitTestLauncher workspace
+        id: fix_permissions
+        continue-on-error: true
+        run: |
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build
+          sudo chmod -R 777 unitTestLauncher/utExecutionAndResults
+
+      - name: Run unit tests (launcher repo)
+        id: unit_tests
+        continue-on-error: true
+        run: |
+          script -q -e -c "python3 unitTestLauncher/unitTestsLauncher.py all" /dev/null
+
+      - name: Replace utResults with launcher results (robust)
+        id: replace_ut_results
+        if: always()
+        continue-on-error: true
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rsync
+
+          mkdir -p utResults
+
+          if [ -d "unitTestLauncher/utExecutionAndResults/utResults" ]; then
+            rsync -a --delete unitTestLauncher/utExecutionAndResults/utResults/ utResults/
+          else
+            echo "No launcher utResults directory found; skipping rsync."
+          fi
+
+      # -----------------------------
+      # Single commit at the end (success OR failure)
+      # Writes ci_status/last_status with full stage outcomes.
+      # -----------------------------
+      - name: Commit and push changes (format + buildCheck + utResults)
+        if: github.event_name == 'push' && always()
+        env:
+          FORMAT_OUTCOME: ${{ steps.clang_format.outcome }}
+          DOCKER_OUTCOME: ${{ steps.docker_info.outcome }}
+          BUILD_OUTCOME:  ${{ steps.sw_cmp_build_check.outcome }}
+          UT_OUTCOME:     ${{ steps.unit_tests.outcome }}
+          RSYNC_OUTCOME:  ${{ steps.replace_ut_results.outcome }}
+          RUN_URL:        ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          FAILED=0
+          for o in "$FORMAT_OUTCOME" "$DOCKER_OUTCOME" "$BUILD_OUTCOME" "$UT_OUTCOME" "$RSYNC_OUTCOME"; do
+            if [ "$o" != "success" ] && [ "$o" != "skipped" ]; then
+              FAILED=1
+              break
+            fi
+          done
+
+          mkdir -p ci_status
+
+          if [ "$FAILED" -eq 1 ]; then
+            STATUS_LINE="CI FAILED"
+          else
+            STATUS_LINE="CI PASSED"
+          fi
+
+          {
+            echo "${STATUS_LINE}"
+            echo "Run: ${RUN_URL}"
+            echo "clang-format: ${FORMAT_OUTCOME}"
+            echo "docker info: ${DOCKER_OUTCOME}"
+            echo "swCmpBuildCheck: ${BUILD_OUTCOME}"
+            echo "unit tests: ${UT_OUTCOME}"
+            echo "rsync utResults: ${RSYNC_OUTCOME}"
+            echo "Timestamp (UTC): $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          } > ci_status/last_status
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            if [ "$FAILED" -eq 1 ]; then
+              git commit -m "CI failed: fmt=${FORMAT_OUTCOME}, docker=${DOCKER_OUTCOME}, build=${BUILD_OUTCOME}, ut=${UT_OUTCOME}, rsync=${RSYNC_OUTCOME} [skip ci]"
+            else
+              git commit -m "unit test performed [skip ci]"
+            fi
+            git push
+          fi
+
+          # Make the workflow result reflect failures even though we continued-on-error above
+          if [ "$FAILED" -eq 1 ]; then
+            echo "One or more steps failed."
+            exit 1
+          fi
