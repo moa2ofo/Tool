@@ -191,24 +191,22 @@ uint8_t Tool_Pop_u8(uint8_t *value_pu8) {
   return l_ret_u8;
 }
 
-void Tool_Clear(void) {
-  uint32_t l_i_u32 = 0U;
+void Tool_Clear(void)
+{
+    uint32_t l_index_u32;
 
-  /* Reset ring buffer bookkeeping first. */
-  Head_u32 = 0U;
-  Tail_u32 = 0U;
-  Count_u32 = 0U;
+    Head_u32 = 0U;
+    Tail_u32 = 0U;
+    Count_u32 = 0U;
 
-  /* Clear buffer (bounded loop). */
-  for (l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) {
-    Buffer_u8[l_i_u32] = 0U;
-  }
+    for (l_index_u32 = 0U; l_index_u32 < TOOL_BUFFER_SIZE_U32; l_index_u32++)
+    {
+        Buffer_u8[l_index_u32] = 0U;
+    }
 
-  /* Clear error/overflow flags, keep init if set. */
-  StatusFlg_u32 &= ~TOOL_STATUS_ERR_U32;
-  StatusFlg_u32 &= ~TOOL_STATUS_OVF_U32;
+    StatusFlg_u32 &= ~TOOL_STATUS_ERR_U32;
+    StatusFlg_u32 &= ~TOOL_STATUS_OVF_U32;
 }
-
 uint8_t Tool_RunTst_u8(void) {
   uint8_t l_ret_u8 = 0U;
   uint32_t l_sum_u32 = 0U;
