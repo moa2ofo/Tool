@@ -202,13 +202,11 @@ uint8_t Tool_RunTst_u8(void) {
   if(Count_u32 > TOOL_BUFFER_SIZE_U32) {
     StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
     l_ret_u8 = 1U;
-  } else {
-    for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) { l_sum_u32 += (uint32_t)Buffer_u8[l_i_u32]; }
+  } else {for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) { l_sum_u32 += (uint32_t)Buffer_u8[l_i_u32]; }
 
     /* Mark unexpected condition if checksum is suspiciously large (defensive).
      */
-    if(l_sum_u32 > (255UL * TOOL_BUFFER_SIZE_U32)) {
-      StatusFlg_u32 |= TOOL_STATUS_UDF_U32;
+    if(l_sum_u32 > (255UL * TOOL_BUFFER_SIZE_U32)) {StatusFlg_u32 |= TOOL_STATUS_UDF_U32;
       l_ret_u8 = 2U;
     } else {
       StatusFlg_u32 &= ~TOOL_STATUS_UDF_U32;
