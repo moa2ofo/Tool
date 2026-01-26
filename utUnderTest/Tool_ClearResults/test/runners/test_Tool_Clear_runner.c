@@ -90,10 +90,10 @@ int main(void)
   UnityBegin("test_Tool_Clear.c");
   run_test(test_Tool_Clear_ResetsRingBufferIndices, "test_Tool_Clear_ResetsRingBufferIndices", 26);
   run_test(test_Tool_Clear_ClearsBufferContent, "test_Tool_Clear_ClearsBufferContent", 41);
-  run_test(test_Tool_Clear_ClearsErrorFlag, "test_Tool_Clear_ClearsErrorFlag", 56);
-  run_test(test_Tool_Clear_ClearsOverflowFlag, "test_Tool_Clear_ClearsOverflowFlag", 68);
-  run_test(test_Tool_Clear_PreservesInitFlag, "test_Tool_Clear_PreservesInitFlag", 80);
-  run_test(test_Tool_Clear_ClearsOnlyErrorAndOverflowFlags, "test_Tool_Clear_ClearsOnlyErrorAndOverflowFlags", 92);
+  run_test(test_Tool_Clear_ClearsErrorFlag, "test_Tool_Clear_ClearsErrorFlag", 52);
+  run_test(test_Tool_Clear_ClearsOverflowFlag, "test_Tool_Clear_ClearsOverflowFlag", 64);
+  run_test(test_Tool_Clear_PreservesInitFlag, "test_Tool_Clear_PreservesInitFlag", 76);
+  run_test(test_Tool_Clear_ClearsOnlyErrorAndOverflowFlags, "test_Tool_Clear_ClearsOnlyErrorAndOverflowFlags", 88);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

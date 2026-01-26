@@ -19,9 +19,7 @@ void Tool_Clear(void) {
   Tail_u32 = 0U;
   Count_u32 = 0U;
 
-  for (l_index_u32 = 0U; l_index_u32 < TOOL_BUFFER_SIZE_U32; l_index_u32++) {
-    Buffer_u8[l_index_u32] = 0U;
-  }
+  for(l_index_u32 = 0U; l_index_u32 < TOOL_BUFFER_SIZE_U32; l_index_u32++) { Buffer_u8[l_index_u32] = 0U; }
 
   StatusFlg_u32 &= ~TOOL_STATUS_ERR_U32;
   StatusFlg_u32 &= ~TOOL_STATUS_OVF_U32;

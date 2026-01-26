@@ -38,9 +38,7 @@ void Tool_Init(void) {
   Count_u32 = 0U;
 
   /* Clear buffer content (bounded loop). */
-  for (l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) {
-    Buffer_u8[l_i_u32] = 0U;
-  }
+  for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) { Buffer_u8[l_i_u32] = 0U; }
 
   /* Initialize status and mode. */
   Mode_e = Tool_modeIdle_e;
@@ -61,20 +59,17 @@ void Tool_DeInit(void) {
   Count_u32 = 0U;
 
   /* Clear buffer content (bounded loop). */
-  for (l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) {
-    Buffer_u8[l_i_u32] = 0U;
-  }
+  for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) { Buffer_u8[l_i_u32] = 0U; }
 }
 
 uint8_t Tool_SetMode_u8(Tool_mode_e mode) {
   uint8_t l_ret_u8 = 0U;
 
   /* Reject mode changes if not initialized. */
-  if ((StatusFlg_u32 & TOOL_STATUS_INIT_U32) == 0U) {
+  if((StatusFlg_u32 & TOOL_STATUS_INIT_U32) == 0U) {
     StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
     l_ret_u8 = 1U;
-  } else if ((mode != Tool_modeIdle_e) && (mode != Tool_modeRun_e) &&
-             (mode != Tool_modeDiag_e)) {
+  } else if((mode != Tool_modeIdle_e) && (mode != Tool_modeRun_e) && (mode != Tool_modeDiag_e)) {
     /* Invalid mode request. */
     StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
     l_ret_u8 = 2U;
@@ -113,22 +108,17 @@ uint32_t Tool_ComputeCrc_u32(const uint8_t *data_pcu8, uint32_t length_u32) {
   uint32_t l_len_u32 = 0U;
 
   /* Defensive: null pointer or zero length -> return init CRC. */
-  if ((data_pcu8 == NULL) || (length_u32 == 0U)) {
+  if((data_pcu8 == NULL) || (length_u32 == 0U)) {
     l_crc_u32 = TOOL_CRC_INIT_U32;
   } else {
     /* Bounded iteration: cap to TOOL_MAX_CRC_LEN_U32. */
-    l_len_u32 =
-        (length_u32 > TOOL_MAX_CRC_LEN_U32) ? TOOL_MAX_CRC_LEN_U32 : length_u32;
+    l_len_u32 = (length_u32 > TOOL_MAX_CRC_LEN_U32) ? TOOL_MAX_CRC_LEN_U32 : length_u32;
 
-    for (l_i_u32 = 0U; l_i_u32 < l_len_u32; l_i_u32++) {
+    for(l_i_u32 = 0U; l_i_u32 < l_len_u32; l_i_u32++) {
       uint32_t l_bit_u32 = 0U;
 
       l_crc_u32 ^= (uint32_t)data_pcu8[l_i_u32];
-      for (l_bit_u32 = 0U; l_bit_u32 < 8U; l_bit_u32++) {
-        l_crc_u32 = ((l_crc_u32 & 1U) != 0U)
-                        ? ((l_crc_u32 >> 1U) ^ TOOL_CRC_POLY_U32)
-                        : (l_crc_u32 >> 1U);
-      }
+      for(l_bit_u32 = 0U; l_bit_u32 < 8U; l_bit_u32++) { l_crc_u32 = ((l_crc_u32 & 1U) != 0U) ? ((l_crc_u32 >> 1U) ^ TOOL_CRC_POLY_U32) : (l_crc_u32 >> 1U); }
     }
   }
 
@@ -142,10 +132,10 @@ uint8_t Tool_Push_u8(uint8_t value_u8) {
   uint8_t l_ret_u8 = 0U;
 
   /* Check initialization. */
-  if ((StatusFlg_u32 & TOOL_STATUS_INIT_U32) == 0U) {
+  if((StatusFlg_u32 & TOOL_STATUS_INIT_U32) == 0U) {
     StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
     l_ret_u8 = 2U;
-  } else if (Count_u32 >= TOOL_BUFFER_SIZE_U32) {
+  } else if(Count_u32 >= TOOL_BUFFER_SIZE_U32) {
     /* Overflow condition. */
     StatusFlg_u32 |= TOOL_STATUS_OVF_U32;
     l_ret_u8 = 1U;
@@ -166,14 +156,14 @@ uint8_t Tool_Pop_u8(uint8_t *value_pu8) {
   uint8_t l_ret_u8 = 0U;
 
   /* Validate output pointer. */
-  if (value_pu8 == NULL) {
+  if(value_pu8 == NULL) {
     StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
     l_ret_u8 = 3U;
-  } else if ((StatusFlg_u32 & TOOL_STATUS_INIT_U32) == 0U) {
+  } else if((StatusFlg_u32 & TOOL_STATUS_INIT_U32) == 0U) {
     StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
     *value_pu8 = 0U;
     l_ret_u8 = 2U;
-  } else if (Count_u32 == 0U) {
+  } else if(Count_u32 == 0U) {
     /* Underflow condition. */
     *value_pu8 = 0U;
     l_ret_u8 = 1U;
@@ -198,9 +188,7 @@ void Tool_Clear(void) {
   Tail_u32 = 0U;
   Count_u32 = 0U;
 
-  for (l_index_u32 = 0U; l_index_u32 < TOOL_BUFFER_SIZE_U32; l_index_u32++) {
-    Buffer_u8[l_index_u32] = 0U;
-  }
+  for(l_index_u32 = 0U; l_index_u32 < TOOL_BUFFER_SIZE_U32; l_index_u32++) { Buffer_u8[l_index_u32] = 0U; }
 
   StatusFlg_u32 &= ~TOOL_STATUS_ERR_U32;
   StatusFlg_u32 &= ~TOOL_STATUS_OVF_U32;
@@ -211,17 +199,15 @@ uint8_t Tool_RunTst_u8(void) {
   uint32_t l_i_u32 = 0U;
 
   /* Simple self-test: validate internal invariants and compute a checksum. */
-  if (Count_u32 > TOOL_BUFFER_SIZE_U32) {
+  if(Count_u32 > TOOL_BUFFER_SIZE_U32) {
     StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
     l_ret_u8 = 1U;
   } else {
-    for (l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) {
-      l_sum_u32 += (uint32_t)Buffer_u8[l_i_u32];
-    }
+    for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) { l_sum_u32 += (uint32_t)Buffer_u8[l_i_u32]; }
 
     /* Mark unexpected condition if checksum is suspiciously large (defensive).
      */
-    if (l_sum_u32 > (255UL * TOOL_BUFFER_SIZE_U32)) {
+    if(l_sum_u32 > (255UL * TOOL_BUFFER_SIZE_U32)) {
       StatusFlg_u32 |= TOOL_STATUS_UDF_U32;
       l_ret_u8 = 2U;
     } else {
@@ -240,8 +226,8 @@ void Tool_Process(void) {
 
   l_CycleCnt_u32++;
 
-  for (l_iter_u32 = 0U; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++) {
-    if ((Mode_e == Tool_modeRun_e) && (Count_u32 != 0U)) {
+  for(l_iter_u32 = 0U; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++) {
+    if((Mode_e == Tool_modeRun_e) && (Count_u32 != 0U)) {
       Tool_Pop_u8(&l_val_u8);
       l_val_u8 ^= (uint8_t)(l_CycleCnt_u32 & 0xFFU);
       Tool_Push_u8(l_val_u8);

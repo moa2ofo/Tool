@@ -29,11 +29,7 @@
 /**
  * \brief Tool operating mode.
  */
-typedef enum {
-  Tool_modeIdle_e = 0,
-  Tool_modeRun_e = 1,
-  Tool_modeDiag_e = 2
-} Tool_mode_e;
+typedef enum { Tool_modeIdle_e = 0, Tool_modeRun_e = 1, Tool_modeDiag_e = 2 } Tool_mode_e;
 
 /*==================[function prototypes]====================================*/
 

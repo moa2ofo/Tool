@@ -2968,11 +2968,7 @@ extern uint32_t StatusFlg_u32;
 /**
  * \brief Tool operating mode.
  */
-typedef enum {
-  Tool_modeIdle_e = 0,
-  Tool_modeRun_e = 1,
-  Tool_modeDiag_e = 2
-} Tool_mode_e;
+typedef enum { Tool_modeIdle_e = 0, Tool_modeRun_e = 1, Tool_modeDiag_e = 2 } Tool_mode_e;
 
 extern Tool_mode_e Mode_e;
 /*==================[function prototypes]====================================*/
@@ -11912,17 +11908,13 @@ void test_Tool_Clear_ResetsRingBufferIndices(void) {
 
 void test_Tool_Clear_ClearsBufferContent(void) {
   /* Arrange */
-  for (uint32_t i = 0U; i < TOOL_BUFFER_SIZE_U32; i++) {
-    Buffer_u8[i] = 0xFFU;
-  }
+  for(uint32_t i = 0U; i < TOOL_BUFFER_SIZE_U32; i++) { Buffer_u8[i] = 0xFFU; }
 
   /* Act */
   Tool_Clear();
 
   /* Assert */
-  for (uint32_t i = 0U; i < TOOL_BUFFER_SIZE_U32; i++) {
-    TEST_ASSERT_EQUAL_UINT8(0U, Buffer_u8[i]);
-  }
+  for(uint32_t i = 0U; i < TOOL_BUFFER_SIZE_U32; i++) { TEST_ASSERT_EQUAL_UINT8(0U, Buffer_u8[i]); }
 }
 
 void test_Tool_Clear_ClearsErrorFlag(void) {
@@ -11963,8 +11955,7 @@ void test_Tool_Clear_PreservesInitFlag(void) {
 
 void test_Tool_Clear_ClearsOnlyErrorAndOverflowFlags(void) {
   /* Arrange */
-  StatusFlg_u32 = (TOOL_STATUS_INIT_U32 | TOOL_STATUS_ERR_U32 |
-                   TOOL_STATUS_OVF_U32 | TOOL_STATUS_UDF_U32);
+  StatusFlg_u32 = (TOOL_STATUS_INIT_U32 | TOOL_STATUS_ERR_U32 | TOOL_STATUS_OVF_U32 | TOOL_STATUS_UDF_U32);
 
   /* Pre-assert */
   TEST_ASSERT_TRUE((StatusFlg_u32 & TOOL_STATUS_INIT_U32) != 0U);
