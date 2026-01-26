@@ -235,7 +235,7 @@ void Tool_Process(void)
     uint32_t l_iter_u32;
     uint8_t l_val_u8;
 
-    l_CycleCnt_u32++; /* Increment cycle counter, wrapping naturally */
+    l_CycleCnt_u32++;
 
     for (l_iter_u32 = 0U; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++)
     {
@@ -247,7 +247,7 @@ void Tool_Process(void)
         }
         else
         {
-            /* No buffer manipulation to keep deterministic timing */
+            /* no operation - maintain deterministic timing */
         }
     }
 }
