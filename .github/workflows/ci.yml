@@ -55,24 +55,13 @@ jobs:
         with:
           python-version: "3.10"
 
-
-      - name: Debug clang-format config presence
-        run: |
-          clang-format --version
-          echo "Repo root:"
-          ls -la
-          echo "unitTestLauncher content:"
-          ls -la unitTestLauncher || true
-          echo "Check .clang-format:"
-          ls -la unitTestLauncher/.clang-format || true
-
       - name: Run clang-format on all .c and .h files
-        id: clang_format
         run: |
           find . -type f \( -name "*.c" -o -name "*.h" \) \
             -not -path "./build/*" \
             -not -path "./.git/*" \
-            -exec clang-format --style=file --assume-filename=unitTestLauncher/.clang-format -i {} \;
+            -exec clang-format --style=file:unitTestLauncher/.clang-format -i {} \;
+
 
       - name: Verify Docker is available
         id: docker_info
