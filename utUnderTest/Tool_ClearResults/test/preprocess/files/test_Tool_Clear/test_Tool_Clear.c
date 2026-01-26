@@ -41,14 +41,14 @@ void test_Tool_Clear_ResetsRingBufferIndices(void)
 
 void test_Tool_Clear_ClearsBufferContent(void)
 {
-  for(uint32_t i = 0U; i < (64U); i++)
+  for (uint32_t i = 0U; i < (64U); i++)
 {
     Buffer_u8[i] = 0xFFU;
   }
 
   Tool_Clear();
 
-  for(uint32_t i = 0U; i < (64U); i++)
+  for (uint32_t i = 0U; i < (64U); i++)
 {
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((0U)), (UNITY_INT)(UNITY_UINT8 )((Buffer_u8[i])), (
    ((void *)0)
@@ -94,25 +94,26 @@ void test_Tool_Clear_PreservesInitFlag(void)
 
 void test_Tool_Clear_ClearsOnlyErrorAndOverflowFlags(void)
 {
-  StatusFlg_u32 = ((1U << 0U) | (1U << 1U) | (1U << 2U) | (1U << 3U));
+  StatusFlg_u32 = ((1U << 0U) | (1U << 1U) |
+                   (1U << 2U) | (1U << 3U));
 
   do { if (((StatusFlg_u32 & (1U << 0U)) != 0U))
-{ } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((97))); } } while (0);
-  do { if (((StatusFlg_u32 & (1U << 1U)) != 0U))
 { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((98))); } } while (0);
-  do { if (((StatusFlg_u32 & (1U << 2U)) != 0U))
+  do { if (((StatusFlg_u32 & (1U << 1U)) != 0U))
 { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((99))); } } while (0);
-  do { if (((StatusFlg_u32 & (1U << 3U)) != 0U))
+  do { if (((StatusFlg_u32 & (1U << 2U)) != 0U))
 { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((100))); } } while (0);
+  do { if (((StatusFlg_u32 & (1U << 3U)) != 0U))
+{ } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((101))); } } while (0);
 
   Tool_Clear();
 
   do { if (((StatusFlg_u32 & (1U << 0U)) != 0U))
-{ } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((106))); } } while (0);
+{ } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((107))); } } while (0);
   do { if (!((StatusFlg_u32 & (1U << 1U)) != 0U))
-{ } else { UnityFail( ((" Expected FALSE Was TRUE")), (UNITY_UINT)((107))); } } while (0);
-  do { if (!((StatusFlg_u32 & (1U << 2U)) != 0U))
 { } else { UnityFail( ((" Expected FALSE Was TRUE")), (UNITY_UINT)((108))); } } while (0);
+  do { if (!((StatusFlg_u32 & (1U << 2U)) != 0U))
+{ } else { UnityFail( ((" Expected FALSE Was TRUE")), (UNITY_UINT)((109))); } } while (0);
   do { if (((StatusFlg_u32 & (1U << 3U)) != 0U))
-{ } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((109))); } } while (0);
+{ } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((110))); } } while (0);
 }

@@ -257,26 +257,30 @@ extern uint32_t StatusFlg_u32;
 
 
 
-typedef enum { Tool_modeIdle_e = 0, Tool_modeRun_e = 1, Tool_modeDiag_e = 2 } Tool_mode_e;
+typedef enum {
+  Tool_modeIdle_e = 0,
+  Tool_modeRun_e = 1,
+  Tool_modeDiag_e = 2
+} Tool_mode_e;
 
 extern Tool_mode_e Mode_e;
-# 104 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 108 "utExecutionAndResults/utUnderTest/src/Tool.h"
 void Tool_Init(void);
-# 156 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 160 "utExecutionAndResults/utUnderTest/src/Tool.h"
 void Tool_DeInit(void);
-# 220 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 224 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_SetMode_u8(Tool_mode_e mode);
-# 274 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 278 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint32_t Tool_GetStatus_u32(void);
-# 347 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 351 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint32_t Tool_ComputeCrc_u32(const uint8_t *data_pcu8, uint32_t length_u32);
-# 414 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 418 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_Push_u8(uint8_t value_u8);
-# 489 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 493 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_Pop_u8(uint8_t *value_pu8);
-# 557 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 561 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_RunTst_u8(void);
-# 616 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 620 "utExecutionAndResults/utUnderTest/src/Tool.h"
 void Tool_Process(void);
 # 2 "utExecutionAndResults/utUnderTest/test/test_Tool_Clear.c" 2
 # 1 "utExecutionAndResults/utUnderTest/src/Tool_Clear.h" 1
@@ -2711,7 +2715,7 @@ void test_Tool_Clear_ResetsRingBufferIndices(void) {
 
 void test_Tool_Clear_ClearsBufferContent(void) {
 
-  for(uint32_t i = 0U; i < (64U); i++) {
+  for (uint32_t i = 0U; i < (64U); i++) {
     Buffer_u8[i] = 0xFFU;
   }
 
@@ -2719,7 +2723,7 @@ void test_Tool_Clear_ClearsBufferContent(void) {
   Tool_Clear();
 
 
-  for(uint32_t i = 0U; i < (64U); i++) {
+  for (uint32_t i = 0U; i < (64U); i++) {
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((0U)), (UNITY_INT)(UNITY_UINT8 )((Buffer_u8[i])), (
 # 52 "utExecutionAndResults/utUnderTest/test/test_Tool_Clear.c" 3 4
    ((void *)0)
@@ -2766,20 +2770,21 @@ void test_Tool_Clear_PreservesInitFlag(void) {
 
 void test_Tool_Clear_ClearsOnlyErrorAndOverflowFlags(void) {
 
-  StatusFlg_u32 = ((1U << 0U) | (1U << 1U) | (1U << 2U) | (1U << 3U));
+  StatusFlg_u32 = ((1U << 0U) | (1U << 1U) |
+                   (1U << 2U) | (1U << 3U));
 
 
-  do { if (((StatusFlg_u32 & (1U << 0U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((97))); } } while (0);
-  do { if (((StatusFlg_u32 & (1U << 1U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((98))); } } while (0);
-  do { if (((StatusFlg_u32 & (1U << 2U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((99))); } } while (0);
-  do { if (((StatusFlg_u32 & (1U << 3U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((100))); } } while (0);
+  do { if (((StatusFlg_u32 & (1U << 0U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((98))); } } while (0);
+  do { if (((StatusFlg_u32 & (1U << 1U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((99))); } } while (0);
+  do { if (((StatusFlg_u32 & (1U << 2U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((100))); } } while (0);
+  do { if (((StatusFlg_u32 & (1U << 3U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((101))); } } while (0);
 
 
   Tool_Clear();
 
 
-  do { if (((StatusFlg_u32 & (1U << 0U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((106))); } } while (0);
-  do { if (!((StatusFlg_u32 & (1U << 1U)) != 0U)) { } else { UnityFail( ((" Expected FALSE Was TRUE")), (UNITY_UINT)((107))); } } while (0);
-  do { if (!((StatusFlg_u32 & (1U << 2U)) != 0U)) { } else { UnityFail( ((" Expected FALSE Was TRUE")), (UNITY_UINT)((108))); } } while (0);
-  do { if (((StatusFlg_u32 & (1U << 3U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((109))); } } while (0);
+  do { if (((StatusFlg_u32 & (1U << 0U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((107))); } } while (0);
+  do { if (!((StatusFlg_u32 & (1U << 1U)) != 0U)) { } else { UnityFail( ((" Expected FALSE Was TRUE")), (UNITY_UINT)((108))); } } while (0);
+  do { if (!((StatusFlg_u32 & (1U << 2U)) != 0U)) { } else { UnityFail( ((" Expected FALSE Was TRUE")), (UNITY_UINT)((109))); } } while (0);
+  do { if (((StatusFlg_u32 & (1U << 3U)) != 0U)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((110))); } } while (0);
 }
