@@ -256,28 +256,24 @@ extern uint32_t StatusFlg_u32;
 
 
 
-typedef enum {
-  Tool_modeIdle_e = 0,
-  Tool_modeRun_e = 1,
-  Tool_modeDiag_e = 2
-} Tool_mode_e;
+typedef enum { Tool_modeIdle_e = 0, Tool_modeRun_e = 1, Tool_modeDiag_e = 2 } Tool_mode_e;
 
 extern Tool_mode_e Mode_e;
-# 108 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 104 "utExecutionAndResults/utUnderTest/src/Tool.h"
 void Tool_Init(void);
-# 160 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 156 "utExecutionAndResults/utUnderTest/src/Tool.h"
 void Tool_DeInit(void);
-# 224 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 220 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_SetMode_u8(Tool_mode_e mode);
-# 278 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 274 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint32_t Tool_GetStatus_u32(void);
-# 351 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 347 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint32_t Tool_ComputeCrc_u32(const uint8_t *data_pcu8, uint32_t length_u32);
-# 418 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 414 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_Push_u8(uint8_t value_u8);
-# 493 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 489 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_Pop_u8(uint8_t *value_pu8);
-# 561 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 557 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_RunTst_u8(void);
-# 620 "utExecutionAndResults/utUnderTest/src/Tool.h"
+# 616 "utExecutionAndResults/utUnderTest/src/Tool.h"
 void Tool_Process(void);

@@ -1,8 +1,8 @@
-CI PASSED
-Run: https://github.com/moa2ofo/Tool/actions/runs/21359147719
-clang-format: performed
+CI FAILED
+Run: https://github.com/moa2ofo/Tool/actions/runs/21359415022
+clang-format: failed
 docker info: performed
 swCmpBuildCheck: performed
 unit tests: performed
 rsync utResults: performed
-Timestamp (UTC): 2026-01-26T13:24:11Z
+Timestamp (UTC): 2026-01-26T13:31:24Z
