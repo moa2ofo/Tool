@@ -565,14 +565,13 @@ uint8_t Tool_RunTst_u8(void);
  * | Mode_e                      | X  |     | Tool_mode_e (static)          |   -   |           1 |           0 |         1 | 0 / 1 / 2                    | [-]      |
  * | Count_u32                   | X  |  X  | uint32_t (static)             |   -   |           1 |           0 |         1 | 0..TOOL_BUFFER_SIZE_U32      | [-]      |
  * | Ring buffer                 | X  |  X  | uint8_t[TOOL_BUFFER_SIZE_U32] |   -   |           1 |           0 |        64 | 0..255                       | [-]      |
- * | l_CycleCnt_u32              | X  |  X  | uint32_t (static local)       |   -   |           1 |           0 |         1 | 0..0xFFFFFFFF                | [-]      |
  * | Tool_Pop_u8 / Tool_Push_u8  | X  |  X  | function calls                |   -   |           - |           - |         - | see respective interfaces    | [-]      |
 
  * @par Activity diagram (PlantUML)
  *
  * @startuml
  * start
- * :l_CycleCnt_u32++;
+ * :static local l_CycleCnt_u32++;
  * :for iter in [0..TOOL_BUFFER_SIZE_U32-1];
  * if (Mode_e == RUN and Count_u32 != 0) then (yes)
  *   :Tool_Pop_u8(&val);
