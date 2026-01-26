@@ -2261,11 +2261,16 @@ void Tool_SetMode_u8_CMockIgnoreAndReturn(UNITY_UINT cmock_line, uint8_t cmock_t
 void Tool_SetMode_u8_CMockStopIgnore(void);
 
 
+void Tool_SetMode_u8_CMockExpectAnyArgsAndReturn(UNITY_UINT cmock_line, uint8_t cmock_to_return);
+
+
 void Tool_SetMode_u8_CMockExpectAndReturn(UNITY_UINT cmock_line, Tool_mode_e mode, uint8_t cmock_to_return);
 typedef uint8_t (* CMOCK_Tool_SetMode_u8_CALLBACK)(Tool_mode_e mode, int cmock_num_calls);
 void Tool_SetMode_u8_AddCallback(CMOCK_Tool_SetMode_u8_CALLBACK Callback);
 void Tool_SetMode_u8_Stub(CMOCK_Tool_SetMode_u8_CALLBACK Callback);
 
+
+void Tool_SetMode_u8_CMockIgnoreArg_mode(UNITY_UINT cmock_line);
 
 
 void Tool_GetStatus_u32_CMockIgnoreAndReturn(UNITY_UINT cmock_line, uint32_t cmock_to_return);
@@ -2285,6 +2290,9 @@ void Tool_ComputeCrc_u32_CMockIgnoreAndReturn(UNITY_UINT cmock_line, uint32_t cm
 void Tool_ComputeCrc_u32_CMockStopIgnore(void);
 
 
+void Tool_ComputeCrc_u32_CMockExpectAnyArgsAndReturn(UNITY_UINT cmock_line, uint32_t cmock_to_return);
+
+
 void Tool_ComputeCrc_u32_CMockExpectAndReturn(UNITY_UINT cmock_line, const uint8_t* data_pcu8, uint32_t length_u32, uint32_t cmock_to_return);
 typedef uint32_t (* CMOCK_Tool_ComputeCrc_u32_CALLBACK)(const uint8_t* data_pcu8, uint32_t length_u32, int cmock_num_calls);
 void Tool_ComputeCrc_u32_AddCallback(CMOCK_Tool_ComputeCrc_u32_CALLBACK Callback);
@@ -2292,9 +2300,19 @@ void Tool_ComputeCrc_u32_Stub(CMOCK_Tool_ComputeCrc_u32_CALLBACK Callback);
 
 
 
+void Tool_ComputeCrc_u32_CMockExpectWithArrayAndReturn(UNITY_UINT cmock_line, const uint8_t* data_pcu8, int data_pcu8_Depth, uint32_t length_u32, uint32_t cmock_to_return);
+
+void Tool_ComputeCrc_u32_CMockIgnoreArg_data_pcu8(UNITY_UINT cmock_line);
+
+void Tool_ComputeCrc_u32_CMockIgnoreArg_length_u32(UNITY_UINT cmock_line);
+
+
 void Tool_Push_u8_CMockIgnoreAndReturn(UNITY_UINT cmock_line, uint8_t cmock_to_return);
 
 void Tool_Push_u8_CMockStopIgnore(void);
+
+
+void Tool_Push_u8_CMockExpectAnyArgsAndReturn(UNITY_UINT cmock_line, uint8_t cmock_to_return);
 
 
 void Tool_Push_u8_CMockExpectAndReturn(UNITY_UINT cmock_line, uint8_t value_u8, uint8_t cmock_to_return);
@@ -2303,10 +2321,15 @@ void Tool_Push_u8_AddCallback(CMOCK_Tool_Push_u8_CALLBACK Callback);
 void Tool_Push_u8_Stub(CMOCK_Tool_Push_u8_CALLBACK Callback);
 
 
+void Tool_Push_u8_CMockIgnoreArg_value_u8(UNITY_UINT cmock_line);
+
 
 void Tool_Pop_u8_CMockIgnoreAndReturn(UNITY_UINT cmock_line, uint8_t cmock_to_return);
 
 void Tool_Pop_u8_CMockStopIgnore(void);
+
+
+void Tool_Pop_u8_CMockExpectAnyArgsAndReturn(UNITY_UINT cmock_line, uint8_t cmock_to_return);
 
 
 void Tool_Pop_u8_CMockExpectAndReturn(UNITY_UINT cmock_line, uint8_t* value_pu8, uint8_t cmock_to_return);
@@ -2314,6 +2337,15 @@ typedef uint8_t (* CMOCK_Tool_Pop_u8_CALLBACK)(uint8_t* value_pu8, int cmock_num
 void Tool_Pop_u8_AddCallback(CMOCK_Tool_Pop_u8_CALLBACK Callback);
 void Tool_Pop_u8_Stub(CMOCK_Tool_Pop_u8_CALLBACK Callback);
 
+
+
+void Tool_Pop_u8_CMockExpectWithArrayAndReturn(UNITY_UINT cmock_line, uint8_t* value_pu8, int value_pu8_Depth, uint8_t cmock_to_return);
+
+
+
+void Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(UNITY_UINT cmock_line, uint8_t const* value_pu8, size_t cmock_size);
+
+void Tool_Pop_u8_CMockIgnoreArg_value_pu8(UNITY_UINT cmock_line);
 
 
 void Tool_RunTst_u8_CMockIgnoreAndReturn(UNITY_UINT cmock_line, uint8_t cmock_to_return);
@@ -2337,7 +2369,7 @@ void Tool_Process_CMockExpect(UNITY_UINT cmock_line);
 typedef void (* CMOCK_Tool_Process_CALLBACK)(int cmock_num_calls);
 void Tool_Process_AddCallback(CMOCK_Tool_Process_CALLBACK Callback);
 void Tool_Process_Stub(CMOCK_Tool_Process_CALLBACK Callback);
-# 146 "utExecutionAndResults/utUnderTest/build/test/mocks/test_Tool_Clear/mock_Tool.h"
+# 178 "utExecutionAndResults/utUnderTest/build/test/mocks/test_Tool_Clear/mock_Tool.h"
 #pragma GCC diagnostic pop
 # 4 "utExecutionAndResults/utUnderTest/test/test_Tool_Clear.c" 2
 

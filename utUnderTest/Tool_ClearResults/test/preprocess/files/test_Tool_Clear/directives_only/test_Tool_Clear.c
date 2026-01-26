@@ -10863,6 +10863,9 @@ void Tool_DeInit_Stub(CMOCK_Tool_DeInit_CALLBACK Callback);
 void Tool_SetMode_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return);
 #define Tool_SetMode_u8_StopIgnore() Tool_SetMode_u8_CMockStopIgnore()
 void Tool_SetMode_u8_CMockStopIgnore(void);
+#define Tool_SetMode_u8_ExpectAnyArgs() TEST_FAIL_MESSAGE("Tool_SetMode_u8 requires _ExpectAnyArgsAndReturn");
+#define Tool_SetMode_u8_ExpectAnyArgsAndReturn(cmock_retval) Tool_SetMode_u8_CMockExpectAnyArgsAndReturn(__LINE__, cmock_retval)
+void Tool_SetMode_u8_CMockExpectAnyArgsAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return);
 #define Tool_SetMode_u8_Expect(mode) TEST_FAIL_MESSAGE("Tool_SetMode_u8 requires _ExpectAndReturn");
 #define Tool_SetMode_u8_ExpectAndReturn(mode,cmock_retval) Tool_SetMode_u8_CMockExpectAndReturn(__LINE__, mode, cmock_retval)
 void Tool_SetMode_u8_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, Tool_mode_e mode, uint8_t cmock_to_return);
@@ -10870,6 +10873,8 @@ typedef uint8_t (* CMOCK_Tool_SetMode_u8_CALLBACK)(Tool_mode_e mode, int cmock_n
 void Tool_SetMode_u8_AddCallback(CMOCK_Tool_SetMode_u8_CALLBACK Callback);
 void Tool_SetMode_u8_Stub(CMOCK_Tool_SetMode_u8_CALLBACK Callback);
 #define Tool_SetMode_u8_StubWithCallback Tool_SetMode_u8_Stub
+#define Tool_SetMode_u8_IgnoreArg_mode() Tool_SetMode_u8_CMockIgnoreArg_mode(__LINE__)
+void Tool_SetMode_u8_CMockIgnoreArg_mode(UNITY_LINE_TYPE cmock_line);
 #define Tool_GetStatus_u32_Ignore() TEST_FAIL_MESSAGE("Tool_GetStatus_u32 requires _IgnoreAndReturn");
 #define Tool_GetStatus_u32_IgnoreAndReturn(cmock_retval) Tool_GetStatus_u32_CMockIgnoreAndReturn(__LINE__, cmock_retval)
 void Tool_GetStatus_u32_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint32_t cmock_to_return);
@@ -10887,6 +10892,9 @@ void Tool_GetStatus_u32_Stub(CMOCK_Tool_GetStatus_u32_CALLBACK Callback);
 void Tool_ComputeCrc_u32_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint32_t cmock_to_return);
 #define Tool_ComputeCrc_u32_StopIgnore() Tool_ComputeCrc_u32_CMockStopIgnore()
 void Tool_ComputeCrc_u32_CMockStopIgnore(void);
+#define Tool_ComputeCrc_u32_ExpectAnyArgs() TEST_FAIL_MESSAGE("Tool_ComputeCrc_u32 requires _ExpectAnyArgsAndReturn");
+#define Tool_ComputeCrc_u32_ExpectAnyArgsAndReturn(cmock_retval) Tool_ComputeCrc_u32_CMockExpectAnyArgsAndReturn(__LINE__, cmock_retval)
+void Tool_ComputeCrc_u32_CMockExpectAnyArgsAndReturn(UNITY_LINE_TYPE cmock_line, uint32_t cmock_to_return);
 #define Tool_ComputeCrc_u32_Expect(data_pcu8,length_u32) TEST_FAIL_MESSAGE("Tool_ComputeCrc_u32 requires _ExpectAndReturn");
 #define Tool_ComputeCrc_u32_ExpectAndReturn(data_pcu8,length_u32,cmock_retval) Tool_ComputeCrc_u32_CMockExpectAndReturn(__LINE__, data_pcu8, length_u32, cmock_retval)
 void Tool_ComputeCrc_u32_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, const uint8_t* data_pcu8, uint32_t length_u32, uint32_t cmock_to_return);
@@ -10894,11 +10902,21 @@ typedef uint32_t (* CMOCK_Tool_ComputeCrc_u32_CALLBACK)(const uint8_t* data_pcu8
 void Tool_ComputeCrc_u32_AddCallback(CMOCK_Tool_ComputeCrc_u32_CALLBACK Callback);
 void Tool_ComputeCrc_u32_Stub(CMOCK_Tool_ComputeCrc_u32_CALLBACK Callback);
 #define Tool_ComputeCrc_u32_StubWithCallback Tool_ComputeCrc_u32_Stub
+#define Tool_ComputeCrc_u32_ExpectWithArray(data_pcu8,data_pcu8_Depth,length_u32) TEST_FAIL_MESSAGE("Tool_ComputeCrc_u32 requires _ExpectWithArrayAndReturn");
+#define Tool_ComputeCrc_u32_ExpectWithArrayAndReturn(data_pcu8,data_pcu8_Depth,length_u32,cmock_retval) Tool_ComputeCrc_u32_CMockExpectWithArrayAndReturn(__LINE__, data_pcu8, (data_pcu8_Depth), length_u32, cmock_retval)
+void Tool_ComputeCrc_u32_CMockExpectWithArrayAndReturn(UNITY_LINE_TYPE cmock_line, const uint8_t* data_pcu8, int data_pcu8_Depth, uint32_t length_u32, uint32_t cmock_to_return);
+#define Tool_ComputeCrc_u32_IgnoreArg_data_pcu8() Tool_ComputeCrc_u32_CMockIgnoreArg_data_pcu8(__LINE__)
+void Tool_ComputeCrc_u32_CMockIgnoreArg_data_pcu8(UNITY_LINE_TYPE cmock_line);
+#define Tool_ComputeCrc_u32_IgnoreArg_length_u32() Tool_ComputeCrc_u32_CMockIgnoreArg_length_u32(__LINE__)
+void Tool_ComputeCrc_u32_CMockIgnoreArg_length_u32(UNITY_LINE_TYPE cmock_line);
 #define Tool_Push_u8_Ignore() TEST_FAIL_MESSAGE("Tool_Push_u8 requires _IgnoreAndReturn");
 #define Tool_Push_u8_IgnoreAndReturn(cmock_retval) Tool_Push_u8_CMockIgnoreAndReturn(__LINE__, cmock_retval)
 void Tool_Push_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return);
 #define Tool_Push_u8_StopIgnore() Tool_Push_u8_CMockStopIgnore()
 void Tool_Push_u8_CMockStopIgnore(void);
+#define Tool_Push_u8_ExpectAnyArgs() TEST_FAIL_MESSAGE("Tool_Push_u8 requires _ExpectAnyArgsAndReturn");
+#define Tool_Push_u8_ExpectAnyArgsAndReturn(cmock_retval) Tool_Push_u8_CMockExpectAnyArgsAndReturn(__LINE__, cmock_retval)
+void Tool_Push_u8_CMockExpectAnyArgsAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return);
 #define Tool_Push_u8_Expect(value_u8) TEST_FAIL_MESSAGE("Tool_Push_u8 requires _ExpectAndReturn");
 #define Tool_Push_u8_ExpectAndReturn(value_u8,cmock_retval) Tool_Push_u8_CMockExpectAndReturn(__LINE__, value_u8, cmock_retval)
 void Tool_Push_u8_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t value_u8, uint8_t cmock_to_return);
@@ -10906,11 +10924,16 @@ typedef uint8_t (* CMOCK_Tool_Push_u8_CALLBACK)(uint8_t value_u8, int cmock_num_
 void Tool_Push_u8_AddCallback(CMOCK_Tool_Push_u8_CALLBACK Callback);
 void Tool_Push_u8_Stub(CMOCK_Tool_Push_u8_CALLBACK Callback);
 #define Tool_Push_u8_StubWithCallback Tool_Push_u8_Stub
+#define Tool_Push_u8_IgnoreArg_value_u8() Tool_Push_u8_CMockIgnoreArg_value_u8(__LINE__)
+void Tool_Push_u8_CMockIgnoreArg_value_u8(UNITY_LINE_TYPE cmock_line);
 #define Tool_Pop_u8_Ignore() TEST_FAIL_MESSAGE("Tool_Pop_u8 requires _IgnoreAndReturn");
 #define Tool_Pop_u8_IgnoreAndReturn(cmock_retval) Tool_Pop_u8_CMockIgnoreAndReturn(__LINE__, cmock_retval)
 void Tool_Pop_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return);
 #define Tool_Pop_u8_StopIgnore() Tool_Pop_u8_CMockStopIgnore()
 void Tool_Pop_u8_CMockStopIgnore(void);
+#define Tool_Pop_u8_ExpectAnyArgs() TEST_FAIL_MESSAGE("Tool_Pop_u8 requires _ExpectAnyArgsAndReturn");
+#define Tool_Pop_u8_ExpectAnyArgsAndReturn(cmock_retval) Tool_Pop_u8_CMockExpectAnyArgsAndReturn(__LINE__, cmock_retval)
+void Tool_Pop_u8_CMockExpectAnyArgsAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return);
 #define Tool_Pop_u8_Expect(value_pu8) TEST_FAIL_MESSAGE("Tool_Pop_u8 requires _ExpectAndReturn");
 #define Tool_Pop_u8_ExpectAndReturn(value_pu8,cmock_retval) Tool_Pop_u8_CMockExpectAndReturn(__LINE__, value_pu8, cmock_retval)
 void Tool_Pop_u8_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t* value_pu8, uint8_t cmock_to_return);
@@ -10918,6 +10941,15 @@ typedef uint8_t (* CMOCK_Tool_Pop_u8_CALLBACK)(uint8_t* value_pu8, int cmock_num
 void Tool_Pop_u8_AddCallback(CMOCK_Tool_Pop_u8_CALLBACK Callback);
 void Tool_Pop_u8_Stub(CMOCK_Tool_Pop_u8_CALLBACK Callback);
 #define Tool_Pop_u8_StubWithCallback Tool_Pop_u8_Stub
+#define Tool_Pop_u8_ExpectWithArray(value_pu8,value_pu8_Depth) TEST_FAIL_MESSAGE("Tool_Pop_u8 requires _ExpectWithArrayAndReturn");
+#define Tool_Pop_u8_ExpectWithArrayAndReturn(value_pu8,value_pu8_Depth,cmock_retval) Tool_Pop_u8_CMockExpectWithArrayAndReturn(__LINE__, value_pu8, (value_pu8_Depth), cmock_retval)
+void Tool_Pop_u8_CMockExpectWithArrayAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t* value_pu8, int value_pu8_Depth, uint8_t cmock_to_return);
+#define Tool_Pop_u8_ReturnThruPtr_value_pu8(value_pu8) Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(__LINE__, value_pu8, sizeof(uint8_t))
+#define Tool_Pop_u8_ReturnArrayThruPtr_value_pu8(value_pu8,cmock_len) Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(__LINE__, value_pu8, (cmock_len * sizeof(*value_pu8)))
+#define Tool_Pop_u8_ReturnMemThruPtr_value_pu8(value_pu8,cmock_size) Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(__LINE__, value_pu8, (cmock_size))
+void Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(UNITY_LINE_TYPE cmock_line, uint8_t const* value_pu8, size_t cmock_size);
+#define Tool_Pop_u8_IgnoreArg_value_pu8() Tool_Pop_u8_CMockIgnoreArg_value_pu8(__LINE__)
+void Tool_Pop_u8_CMockIgnoreArg_value_pu8(UNITY_LINE_TYPE cmock_line);
 #define Tool_RunTst_u8_Ignore() TEST_FAIL_MESSAGE("Tool_RunTst_u8 requires _IgnoreAndReturn");
 #define Tool_RunTst_u8_IgnoreAndReturn(cmock_retval) Tool_RunTst_u8_CMockIgnoreAndReturn(__LINE__, cmock_retval)
 void Tool_RunTst_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return);

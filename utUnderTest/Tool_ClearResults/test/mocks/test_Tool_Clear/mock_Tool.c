@@ -23,6 +23,7 @@ static const char* CMockString_value_u8 = "value_u8";
 typedef struct _CMOCK_Tool_Init_CALL_INSTANCE
 {
   UNITY_LINE_TYPE LineNumber;
+  char ExpectAnyArgsBool;
   int CallOrder;
 
 } CMOCK_Tool_Init_CALL_INSTANCE;
@@ -30,6 +31,7 @@ typedef struct _CMOCK_Tool_Init_CALL_INSTANCE
 typedef struct _CMOCK_Tool_DeInit_CALL_INSTANCE
 {
   UNITY_LINE_TYPE LineNumber;
+  char ExpectAnyArgsBool;
   int CallOrder;
 
 } CMOCK_Tool_DeInit_CALL_INSTANCE;
@@ -37,15 +39,18 @@ typedef struct _CMOCK_Tool_DeInit_CALL_INSTANCE
 typedef struct _CMOCK_Tool_SetMode_u8_CALL_INSTANCE
 {
   UNITY_LINE_TYPE LineNumber;
+  char ExpectAnyArgsBool;
   uint8_t ReturnVal;
   int CallOrder;
   Tool_mode_e Expected_mode;
+  char IgnoreArg_mode;
 
 } CMOCK_Tool_SetMode_u8_CALL_INSTANCE;
 
 typedef struct _CMOCK_Tool_GetStatus_u32_CALL_INSTANCE
 {
   UNITY_LINE_TYPE LineNumber;
+  char ExpectAnyArgsBool;
   uint32_t ReturnVal;
   int CallOrder;
 
@@ -54,34 +59,47 @@ typedef struct _CMOCK_Tool_GetStatus_u32_CALL_INSTANCE
 typedef struct _CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE
 {
   UNITY_LINE_TYPE LineNumber;
+  char ExpectAnyArgsBool;
   uint32_t ReturnVal;
   int CallOrder;
   const uint8_t* Expected_data_pcu8;
   uint32_t Expected_length_u32;
+  int Expected_data_pcu8_Depth;
+  char IgnoreArg_data_pcu8;
+  char IgnoreArg_length_u32;
 
 } CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE;
 
 typedef struct _CMOCK_Tool_Push_u8_CALL_INSTANCE
 {
   UNITY_LINE_TYPE LineNumber;
+  char ExpectAnyArgsBool;
   uint8_t ReturnVal;
   int CallOrder;
   uint8_t Expected_value_u8;
+  char IgnoreArg_value_u8;
 
 } CMOCK_Tool_Push_u8_CALL_INSTANCE;
 
 typedef struct _CMOCK_Tool_Pop_u8_CALL_INSTANCE
 {
   UNITY_LINE_TYPE LineNumber;
+  char ExpectAnyArgsBool;
   uint8_t ReturnVal;
   int CallOrder;
   uint8_t* Expected_value_pu8;
+  int Expected_value_pu8_Depth;
+  char ReturnThruPtr_value_pu8_Used;
+  uint8_t const* ReturnThruPtr_value_pu8_Val;
+  size_t ReturnThruPtr_value_pu8_Size;
+  char IgnoreArg_value_pu8;
 
 } CMOCK_Tool_Pop_u8_CALL_INSTANCE;
 
 typedef struct _CMOCK_Tool_RunTst_u8_CALL_INSTANCE
 {
   UNITY_LINE_TYPE LineNumber;
+  char ExpectAnyArgsBool;
   uint8_t ReturnVal;
   int CallOrder;
 
@@ -90,6 +108,7 @@ typedef struct _CMOCK_Tool_RunTst_u8_CALL_INSTANCE
 typedef struct _CMOCK_Tool_Process_CALL_INSTANCE
 {
   UNITY_LINE_TYPE LineNumber;
+  char ExpectAnyArgsBool;
   int CallOrder;
 
 } CMOCK_Tool_Process_CALL_INSTANCE;
@@ -340,6 +359,7 @@ void Tool_Init_CMockExpect(UNITY_LINE_TYPE cmock_line)
   Mock.Tool_Init_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
   cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
 }
 
 void Tool_Init_AddCallback(CMOCK_Tool_Init_CALLBACK Callback)
@@ -408,6 +428,7 @@ void Tool_DeInit_CMockExpect(UNITY_LINE_TYPE cmock_line)
   Mock.Tool_DeInit_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
   cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
 }
 
 void Tool_DeInit_AddCallback(CMOCK_Tool_DeInit_CALLBACK Callback)
@@ -452,9 +473,13 @@ uint8_t Tool_SetMode_u8(Tool_mode_e mode)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledEarly);
   if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledLate);
+  if (!cmock_call_instance->ExpectAnyArgsBool)
+  {
+  if (!cmock_call_instance->IgnoreArg_mode)
   {
     UNITY_SET_DETAILS(CMockString_Tool_SetMode_u8,CMockString_mode);
     UNITY_TEST_ASSERT_EQUAL_MEMORY((void*)(&cmock_call_instance->Expected_mode), (void*)(&mode), sizeof(Tool_mode_e), cmock_line, CMockStringMismatch);
+  }
   }
   if (Mock.Tool_SetMode_u8_CallbackFunctionPointer != NULL)
   {
@@ -469,6 +494,7 @@ void CMockExpectParameters_Tool_SetMode_u8(CMOCK_Tool_SetMode_u8_CALL_INSTANCE* 
 {
   memcpy((void*)(&cmock_call_instance->Expected_mode), (void*)(&mode),
          sizeof(Tool_mode_e[sizeof(mode) == sizeof(Tool_mode_e) ? 1 : -1])); /* add Tool_mode_e to :treat_as_array if this causes an error */
+  cmock_call_instance->IgnoreArg_mode = 0;
 }
 
 void Tool_SetMode_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return)
@@ -480,6 +506,7 @@ void Tool_SetMode_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cm
   Mock.Tool_SetMode_u8_CallInstance = CMock_Guts_MemChain(Mock.Tool_SetMode_u8_CallInstance, cmock_guts_index);
   Mock.Tool_SetMode_u8_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
   cmock_call_instance->ReturnVal = cmock_to_return;
   Mock.Tool_SetMode_u8_IgnoreBool = (char)1;
 }
@@ -489,6 +516,21 @@ void Tool_SetMode_u8_CMockStopIgnore(void)
   if(Mock.Tool_SetMode_u8_IgnoreBool)
     Mock.Tool_SetMode_u8_CallInstance = CMock_Guts_MemNext(Mock.Tool_SetMode_u8_CallInstance);
   Mock.Tool_SetMode_u8_IgnoreBool = (char)0;
+}
+
+void Tool_SetMode_u8_CMockExpectAnyArgsAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_Tool_SetMode_u8_CALL_INSTANCE));
+  CMOCK_Tool_SetMode_u8_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_SetMode_u8_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.Tool_SetMode_u8_CallInstance = CMock_Guts_MemChain(Mock.Tool_SetMode_u8_CallInstance, cmock_guts_index);
+  Mock.Tool_SetMode_u8_IgnoreBool = (char)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
+  cmock_call_instance->ReturnVal = cmock_to_return;
+  cmock_call_instance->ExpectAnyArgsBool = (char)1;
 }
 
 void Tool_SetMode_u8_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, Tool_mode_e mode, uint8_t cmock_to_return)
@@ -501,6 +543,7 @@ void Tool_SetMode_u8_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, Tool_mode_
   Mock.Tool_SetMode_u8_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
   cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
   CMockExpectParameters_Tool_SetMode_u8(cmock_call_instance, mode);
   cmock_call_instance->ReturnVal = cmock_to_return;
 }
@@ -517,6 +560,13 @@ void Tool_SetMode_u8_Stub(CMOCK_Tool_SetMode_u8_CALLBACK Callback)
   Mock.Tool_SetMode_u8_IgnoreBool = (char)0;
   Mock.Tool_SetMode_u8_CallbackBool = (char)0;
   Mock.Tool_SetMode_u8_CallbackFunctionPointer = Callback;
+}
+
+void Tool_SetMode_u8_CMockIgnoreArg_mode(UNITY_LINE_TYPE cmock_line)
+{
+  CMOCK_Tool_SetMode_u8_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_SetMode_u8_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.Tool_SetMode_u8_CallInstance));
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
+  cmock_call_instance->IgnoreArg_mode = 1;
 }
 
 uint32_t Tool_GetStatus_u32(void)
@@ -564,6 +614,7 @@ void Tool_GetStatus_u32_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint32_
   Mock.Tool_GetStatus_u32_CallInstance = CMock_Guts_MemChain(Mock.Tool_GetStatus_u32_CallInstance, cmock_guts_index);
   Mock.Tool_GetStatus_u32_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
   cmock_call_instance->ReturnVal = cmock_to_return;
   Mock.Tool_GetStatus_u32_IgnoreBool = (char)1;
 }
@@ -585,6 +636,7 @@ void Tool_GetStatus_u32_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint32_
   Mock.Tool_GetStatus_u32_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
   cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
   cmock_call_instance->ReturnVal = cmock_to_return;
 }
 
@@ -630,16 +682,21 @@ uint32_t Tool_ComputeCrc_u32(const uint8_t* data_pcu8, uint32_t length_u32)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledEarly);
   if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledLate);
+  if (!cmock_call_instance->ExpectAnyArgsBool)
+  {
+  if (!cmock_call_instance->IgnoreArg_data_pcu8)
   {
     UNITY_SET_DETAILS(CMockString_Tool_ComputeCrc_u32,CMockString_data_pcu8);
     if (cmock_call_instance->Expected_data_pcu8 == NULL)
       { UNITY_TEST_ASSERT_NULL(data_pcu8, cmock_line, CMockStringExpNULL); }
     else
-      { UNITY_TEST_ASSERT_EQUAL_HEX8_ARRAY(cmock_call_instance->Expected_data_pcu8, data_pcu8, 1, cmock_line, CMockStringMismatch); }
+      { UNITY_TEST_ASSERT_EQUAL_HEX8_ARRAY(cmock_call_instance->Expected_data_pcu8, data_pcu8, cmock_call_instance->Expected_data_pcu8_Depth, cmock_line, CMockStringMismatch); }
   }
+  if (!cmock_call_instance->IgnoreArg_length_u32)
   {
     UNITY_SET_DETAILS(CMockString_Tool_ComputeCrc_u32,CMockString_length_u32);
     UNITY_TEST_ASSERT_EQUAL_HEX32(cmock_call_instance->Expected_length_u32, length_u32, cmock_line, CMockStringMismatch);
+  }
   }
   if (Mock.Tool_ComputeCrc_u32_CallbackFunctionPointer != NULL)
   {
@@ -649,11 +706,14 @@ uint32_t Tool_ComputeCrc_u32(const uint8_t* data_pcu8, uint32_t length_u32)
   return cmock_call_instance->ReturnVal;
 }
 
-void CMockExpectParameters_Tool_ComputeCrc_u32(CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE* cmock_call_instance, const uint8_t* data_pcu8, uint32_t length_u32);
-void CMockExpectParameters_Tool_ComputeCrc_u32(CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE* cmock_call_instance, const uint8_t* data_pcu8, uint32_t length_u32)
+void CMockExpectParameters_Tool_ComputeCrc_u32(CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE* cmock_call_instance, const uint8_t* data_pcu8, int data_pcu8_Depth, uint32_t length_u32);
+void CMockExpectParameters_Tool_ComputeCrc_u32(CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE* cmock_call_instance, const uint8_t* data_pcu8, int data_pcu8_Depth, uint32_t length_u32)
 {
   cmock_call_instance->Expected_data_pcu8 = data_pcu8;
+  cmock_call_instance->Expected_data_pcu8_Depth = data_pcu8_Depth;
+  cmock_call_instance->IgnoreArg_data_pcu8 = 0;
   cmock_call_instance->Expected_length_u32 = length_u32;
+  cmock_call_instance->IgnoreArg_length_u32 = 0;
 }
 
 void Tool_ComputeCrc_u32_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint32_t cmock_to_return)
@@ -665,6 +725,7 @@ void Tool_ComputeCrc_u32_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint32
   Mock.Tool_ComputeCrc_u32_CallInstance = CMock_Guts_MemChain(Mock.Tool_ComputeCrc_u32_CallInstance, cmock_guts_index);
   Mock.Tool_ComputeCrc_u32_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
   cmock_call_instance->ReturnVal = cmock_to_return;
   Mock.Tool_ComputeCrc_u32_IgnoreBool = (char)1;
 }
@@ -674,6 +735,21 @@ void Tool_ComputeCrc_u32_CMockStopIgnore(void)
   if(Mock.Tool_ComputeCrc_u32_IgnoreBool)
     Mock.Tool_ComputeCrc_u32_CallInstance = CMock_Guts_MemNext(Mock.Tool_ComputeCrc_u32_CallInstance);
   Mock.Tool_ComputeCrc_u32_IgnoreBool = (char)0;
+}
+
+void Tool_ComputeCrc_u32_CMockExpectAnyArgsAndReturn(UNITY_LINE_TYPE cmock_line, uint32_t cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE));
+  CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.Tool_ComputeCrc_u32_CallInstance = CMock_Guts_MemChain(Mock.Tool_ComputeCrc_u32_CallInstance, cmock_guts_index);
+  Mock.Tool_ComputeCrc_u32_IgnoreBool = (char)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
+  cmock_call_instance->ReturnVal = cmock_to_return;
+  cmock_call_instance->ExpectAnyArgsBool = (char)1;
 }
 
 void Tool_ComputeCrc_u32_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, const uint8_t* data_pcu8, uint32_t length_u32, uint32_t cmock_to_return)
@@ -686,7 +762,8 @@ void Tool_ComputeCrc_u32_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, const 
   Mock.Tool_ComputeCrc_u32_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
   cmock_call_instance->CallOrder = ++GlobalExpectCount;
-  CMockExpectParameters_Tool_ComputeCrc_u32(cmock_call_instance, data_pcu8, length_u32);
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
+  CMockExpectParameters_Tool_ComputeCrc_u32(cmock_call_instance, data_pcu8, 1, length_u32);
   cmock_call_instance->ReturnVal = cmock_to_return;
 }
 
@@ -702,6 +779,35 @@ void Tool_ComputeCrc_u32_Stub(CMOCK_Tool_ComputeCrc_u32_CALLBACK Callback)
   Mock.Tool_ComputeCrc_u32_IgnoreBool = (char)0;
   Mock.Tool_ComputeCrc_u32_CallbackBool = (char)0;
   Mock.Tool_ComputeCrc_u32_CallbackFunctionPointer = Callback;
+}
+
+void Tool_ComputeCrc_u32_CMockExpectWithArrayAndReturn(UNITY_LINE_TYPE cmock_line, const uint8_t* data_pcu8, int data_pcu8_Depth, uint32_t length_u32, uint32_t cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE));
+  CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.Tool_ComputeCrc_u32_CallInstance = CMock_Guts_MemChain(Mock.Tool_ComputeCrc_u32_CallInstance, cmock_guts_index);
+  Mock.Tool_ComputeCrc_u32_IgnoreBool = (char)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
+  CMockExpectParameters_Tool_ComputeCrc_u32(cmock_call_instance, data_pcu8, data_pcu8_Depth, length_u32);
+  cmock_call_instance->ReturnVal = cmock_to_return;
+}
+
+void Tool_ComputeCrc_u32_CMockIgnoreArg_data_pcu8(UNITY_LINE_TYPE cmock_line)
+{
+  CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.Tool_ComputeCrc_u32_CallInstance));
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
+  cmock_call_instance->IgnoreArg_data_pcu8 = 1;
+}
+
+void Tool_ComputeCrc_u32_CMockIgnoreArg_length_u32(UNITY_LINE_TYPE cmock_line)
+{
+  CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_ComputeCrc_u32_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.Tool_ComputeCrc_u32_CallInstance));
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
+  cmock_call_instance->IgnoreArg_length_u32 = 1;
 }
 
 uint8_t Tool_Push_u8(uint8_t value_u8)
@@ -732,9 +838,13 @@ uint8_t Tool_Push_u8(uint8_t value_u8)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledEarly);
   if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledLate);
+  if (!cmock_call_instance->ExpectAnyArgsBool)
+  {
+  if (!cmock_call_instance->IgnoreArg_value_u8)
   {
     UNITY_SET_DETAILS(CMockString_Tool_Push_u8,CMockString_value_u8);
     UNITY_TEST_ASSERT_EQUAL_HEX8(cmock_call_instance->Expected_value_u8, value_u8, cmock_line, CMockStringMismatch);
+  }
   }
   if (Mock.Tool_Push_u8_CallbackFunctionPointer != NULL)
   {
@@ -748,6 +858,7 @@ void CMockExpectParameters_Tool_Push_u8(CMOCK_Tool_Push_u8_CALL_INSTANCE* cmock_
 void CMockExpectParameters_Tool_Push_u8(CMOCK_Tool_Push_u8_CALL_INSTANCE* cmock_call_instance, uint8_t value_u8)
 {
   cmock_call_instance->Expected_value_u8 = value_u8;
+  cmock_call_instance->IgnoreArg_value_u8 = 0;
 }
 
 void Tool_Push_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return)
@@ -759,6 +870,7 @@ void Tool_Push_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock
   Mock.Tool_Push_u8_CallInstance = CMock_Guts_MemChain(Mock.Tool_Push_u8_CallInstance, cmock_guts_index);
   Mock.Tool_Push_u8_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
   cmock_call_instance->ReturnVal = cmock_to_return;
   Mock.Tool_Push_u8_IgnoreBool = (char)1;
 }
@@ -768,6 +880,21 @@ void Tool_Push_u8_CMockStopIgnore(void)
   if(Mock.Tool_Push_u8_IgnoreBool)
     Mock.Tool_Push_u8_CallInstance = CMock_Guts_MemNext(Mock.Tool_Push_u8_CallInstance);
   Mock.Tool_Push_u8_IgnoreBool = (char)0;
+}
+
+void Tool_Push_u8_CMockExpectAnyArgsAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_Tool_Push_u8_CALL_INSTANCE));
+  CMOCK_Tool_Push_u8_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_Push_u8_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.Tool_Push_u8_CallInstance = CMock_Guts_MemChain(Mock.Tool_Push_u8_CallInstance, cmock_guts_index);
+  Mock.Tool_Push_u8_IgnoreBool = (char)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
+  cmock_call_instance->ReturnVal = cmock_to_return;
+  cmock_call_instance->ExpectAnyArgsBool = (char)1;
 }
 
 void Tool_Push_u8_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t value_u8, uint8_t cmock_to_return)
@@ -780,6 +907,7 @@ void Tool_Push_u8_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t value
   Mock.Tool_Push_u8_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
   cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
   CMockExpectParameters_Tool_Push_u8(cmock_call_instance, value_u8);
   cmock_call_instance->ReturnVal = cmock_to_return;
 }
@@ -796,6 +924,13 @@ void Tool_Push_u8_Stub(CMOCK_Tool_Push_u8_CALLBACK Callback)
   Mock.Tool_Push_u8_IgnoreBool = (char)0;
   Mock.Tool_Push_u8_CallbackBool = (char)0;
   Mock.Tool_Push_u8_CallbackFunctionPointer = Callback;
+}
+
+void Tool_Push_u8_CMockIgnoreArg_value_u8(UNITY_LINE_TYPE cmock_line)
+{
+  CMOCK_Tool_Push_u8_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_Push_u8_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.Tool_Push_u8_CallInstance));
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
+  cmock_call_instance->IgnoreArg_value_u8 = 1;
 }
 
 uint8_t Tool_Pop_u8(uint8_t* value_pu8)
@@ -826,25 +961,38 @@ uint8_t Tool_Pop_u8(uint8_t* value_pu8)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledEarly);
   if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledLate);
+  if (!cmock_call_instance->ExpectAnyArgsBool)
+  {
+  if (!cmock_call_instance->IgnoreArg_value_pu8)
   {
     UNITY_SET_DETAILS(CMockString_Tool_Pop_u8,CMockString_value_pu8);
     if (cmock_call_instance->Expected_value_pu8 == NULL)
       { UNITY_TEST_ASSERT_NULL(value_pu8, cmock_line, CMockStringExpNULL); }
     else
-      { UNITY_TEST_ASSERT_EQUAL_HEX8_ARRAY(cmock_call_instance->Expected_value_pu8, value_pu8, 1, cmock_line, CMockStringMismatch); }
+      { UNITY_TEST_ASSERT_EQUAL_HEX8_ARRAY(cmock_call_instance->Expected_value_pu8, value_pu8, cmock_call_instance->Expected_value_pu8_Depth, cmock_line, CMockStringMismatch); }
+  }
   }
   if (Mock.Tool_Pop_u8_CallbackFunctionPointer != NULL)
   {
     cmock_call_instance->ReturnVal = Mock.Tool_Pop_u8_CallbackFunctionPointer(value_pu8, Mock.Tool_Pop_u8_CallbackCalls++);
   }
+  if (cmock_call_instance->ReturnThruPtr_value_pu8_Used)
+  {
+    UNITY_TEST_ASSERT_NOT_NULL(value_pu8, cmock_line, CMockStringPtrIsNULL);
+    memcpy((void*)value_pu8, (const void*)cmock_call_instance->ReturnThruPtr_value_pu8_Val,
+      cmock_call_instance->ReturnThruPtr_value_pu8_Size);
+  }
   UNITY_CLR_DETAILS();
   return cmock_call_instance->ReturnVal;
 }
 
-void CMockExpectParameters_Tool_Pop_u8(CMOCK_Tool_Pop_u8_CALL_INSTANCE* cmock_call_instance, uint8_t* value_pu8);
-void CMockExpectParameters_Tool_Pop_u8(CMOCK_Tool_Pop_u8_CALL_INSTANCE* cmock_call_instance, uint8_t* value_pu8)
+void CMockExpectParameters_Tool_Pop_u8(CMOCK_Tool_Pop_u8_CALL_INSTANCE* cmock_call_instance, uint8_t* value_pu8, int value_pu8_Depth);
+void CMockExpectParameters_Tool_Pop_u8(CMOCK_Tool_Pop_u8_CALL_INSTANCE* cmock_call_instance, uint8_t* value_pu8, int value_pu8_Depth)
 {
   cmock_call_instance->Expected_value_pu8 = value_pu8;
+  cmock_call_instance->Expected_value_pu8_Depth = value_pu8_Depth;
+  cmock_call_instance->IgnoreArg_value_pu8 = 0;
+  cmock_call_instance->ReturnThruPtr_value_pu8_Used = 0;
 }
 
 void Tool_Pop_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return)
@@ -856,6 +1004,7 @@ void Tool_Pop_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_
   Mock.Tool_Pop_u8_CallInstance = CMock_Guts_MemChain(Mock.Tool_Pop_u8_CallInstance, cmock_guts_index);
   Mock.Tool_Pop_u8_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
   cmock_call_instance->ReturnVal = cmock_to_return;
   Mock.Tool_Pop_u8_IgnoreBool = (char)1;
 }
@@ -865,6 +1014,21 @@ void Tool_Pop_u8_CMockStopIgnore(void)
   if(Mock.Tool_Pop_u8_IgnoreBool)
     Mock.Tool_Pop_u8_CallInstance = CMock_Guts_MemNext(Mock.Tool_Pop_u8_CallInstance);
   Mock.Tool_Pop_u8_IgnoreBool = (char)0;
+}
+
+void Tool_Pop_u8_CMockExpectAnyArgsAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_Tool_Pop_u8_CALL_INSTANCE));
+  CMOCK_Tool_Pop_u8_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_Pop_u8_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.Tool_Pop_u8_CallInstance = CMock_Guts_MemChain(Mock.Tool_Pop_u8_CallInstance, cmock_guts_index);
+  Mock.Tool_Pop_u8_IgnoreBool = (char)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
+  cmock_call_instance->ReturnVal = cmock_to_return;
+  cmock_call_instance->ExpectAnyArgsBool = (char)1;
 }
 
 void Tool_Pop_u8_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t* value_pu8, uint8_t cmock_to_return)
@@ -877,7 +1041,8 @@ void Tool_Pop_u8_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t* value
   Mock.Tool_Pop_u8_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
   cmock_call_instance->CallOrder = ++GlobalExpectCount;
-  CMockExpectParameters_Tool_Pop_u8(cmock_call_instance, value_pu8);
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
+  CMockExpectParameters_Tool_Pop_u8(cmock_call_instance, value_pu8, 1);
   cmock_call_instance->ReturnVal = cmock_to_return;
 }
 
@@ -893,6 +1058,37 @@ void Tool_Pop_u8_Stub(CMOCK_Tool_Pop_u8_CALLBACK Callback)
   Mock.Tool_Pop_u8_IgnoreBool = (char)0;
   Mock.Tool_Pop_u8_CallbackBool = (char)0;
   Mock.Tool_Pop_u8_CallbackFunctionPointer = Callback;
+}
+
+void Tool_Pop_u8_CMockExpectWithArrayAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t* value_pu8, int value_pu8_Depth, uint8_t cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_Tool_Pop_u8_CALL_INSTANCE));
+  CMOCK_Tool_Pop_u8_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_Pop_u8_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.Tool_Pop_u8_CallInstance = CMock_Guts_MemChain(Mock.Tool_Pop_u8_CallInstance, cmock_guts_index);
+  Mock.Tool_Pop_u8_IgnoreBool = (char)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
+  CMockExpectParameters_Tool_Pop_u8(cmock_call_instance, value_pu8, value_pu8_Depth);
+  cmock_call_instance->ReturnVal = cmock_to_return;
+}
+
+void Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(UNITY_LINE_TYPE cmock_line, uint8_t const* value_pu8, size_t cmock_size)
+{
+  CMOCK_Tool_Pop_u8_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_Pop_u8_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.Tool_Pop_u8_CallInstance));
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringPtrPreExp);
+  cmock_call_instance->ReturnThruPtr_value_pu8_Used = 1;
+  cmock_call_instance->ReturnThruPtr_value_pu8_Val = value_pu8;
+  cmock_call_instance->ReturnThruPtr_value_pu8_Size = cmock_size;
+}
+
+void Tool_Pop_u8_CMockIgnoreArg_value_pu8(UNITY_LINE_TYPE cmock_line)
+{
+  CMOCK_Tool_Pop_u8_CALL_INSTANCE* cmock_call_instance = (CMOCK_Tool_Pop_u8_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.Tool_Pop_u8_CallInstance));
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
+  cmock_call_instance->IgnoreArg_value_pu8 = 1;
 }
 
 uint8_t Tool_RunTst_u8(void)
@@ -940,6 +1136,7 @@ void Tool_RunTst_u8_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmo
   Mock.Tool_RunTst_u8_CallInstance = CMock_Guts_MemChain(Mock.Tool_RunTst_u8_CallInstance, cmock_guts_index);
   Mock.Tool_RunTst_u8_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
   cmock_call_instance->ReturnVal = cmock_to_return;
   Mock.Tool_RunTst_u8_IgnoreBool = (char)1;
 }
@@ -961,6 +1158,7 @@ void Tool_RunTst_u8_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmo
   Mock.Tool_RunTst_u8_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
   cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
   cmock_call_instance->ReturnVal = cmock_to_return;
 }
 
@@ -1030,6 +1228,7 @@ void Tool_Process_CMockExpect(UNITY_LINE_TYPE cmock_line)
   Mock.Tool_Process_IgnoreBool = (char)0;
   cmock_call_instance->LineNumber = cmock_line;
   cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ExpectAnyArgsBool = (char)0;
 }
 
 void Tool_Process_AddCallback(CMOCK_Tool_Process_CALLBACK Callback)
