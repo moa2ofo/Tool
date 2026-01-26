@@ -38,7 +38,9 @@ void Tool_Init(void) {
   Count_u32 = 0U;
 
   /* Clear buffer content (bounded loop). */
-  for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) { Buffer_u8[l_i_u32] = 0U; }
+  for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) {
+    Buffer_u8[l_i_u32] = 0U;
+  }
 
   /* Initialize status and mode. */
   Mode_e = Tool_modeIdle_e;
@@ -59,7 +61,9 @@ void Tool_DeInit(void) {
   Count_u32 = 0U;
 
   /* Clear buffer content (bounded loop). */
-  for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) { Buffer_u8[l_i_u32] = 0U; }
+  for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) {
+    Buffer_u8[l_i_u32] = 0U;
+  }
 }
 
 uint8_t Tool_SetMode_u8(Tool_mode_e mode) {
@@ -118,7 +122,9 @@ uint32_t Tool_ComputeCrc_u32(const uint8_t *data_pcu8, uint32_t length_u32) {
       uint32_t l_bit_u32 = 0U;
 
       l_crc_u32 ^= (uint32_t)data_pcu8[l_i_u32];
-      for(l_bit_u32 = 0U; l_bit_u32 < 8U; l_bit_u32++) { l_crc_u32 = ((l_crc_u32 & 1U) != 0U) ? ((l_crc_u32 >> 1U) ^ TOOL_CRC_POLY_U32) : (l_crc_u32 >> 1U); }
+      for(l_bit_u32 = 0U; l_bit_u32 < 8U; l_bit_u32++) {
+        l_crc_u32 = ((l_crc_u32 & 1U) != 0U) ? ((l_crc_u32 >> 1U) ^ TOOL_CRC_POLY_U32) : (l_crc_u32 >> 1U);
+      }
     }
   }
 
@@ -182,21 +188,19 @@ uint8_t Tool_Pop_u8(uint8_t *value_pu8) {
 }
 
 void Tool_Clear(void) {
-  uint32_t l_i_u32 = 0U;
+  uint32_t l_index_u32;
 
-  /* Reset ring buffer bookkeeping first. */
   Head_u32 = 0U;
   Tail_u32 = 0U;
   Count_u32 = 0U;
 
-  /* Clear buffer (bounded loop). */
-  for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) { Buffer_u8[l_i_u32] = 0U; }
+  for(l_index_u32 = 0U; l_index_u32 < TOOL_BUFFER_SIZE_U32; l_index_u32++) {
+    Buffer_u8[l_index_u32] = 0U;
+  }
 
-  /* Clear error/overflow flags, keep init if set. */
   StatusFlg_u32 &= ~TOOL_STATUS_ERR_U32;
   StatusFlg_u32 &= ~TOOL_STATUS_OVF_U32;
 }
-
 uint8_t Tool_RunTst_u8(void) {
   uint8_t l_ret_u8 = 0U;
   uint32_t l_sum_u32 = 0U;
@@ -207,9 +211,12 @@ uint8_t Tool_RunTst_u8(void) {
     StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
     l_ret_u8 = 1U;
   } else {
-    for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) { l_sum_u32 += (uint32_t)Buffer_u8[l_i_u32]; }
+    for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) {
+      l_sum_u32 += (uint32_t)Buffer_u8[l_i_u32];
+    }
 
-    /* Mark unexpected condition if checksum is suspiciously large (defensive). */
+    /* Mark unexpected condition if checksum is suspiciously large (defensive).
+     */
     if(l_sum_u32 > (255UL * TOOL_BUFFER_SIZE_U32)) {
       StatusFlg_u32 |= TOOL_STATUS_UDF_U32;
       l_ret_u8 = 2U;
@@ -223,26 +230,20 @@ uint8_t Tool_RunTst_u8(void) {
 }
 
 void Tool_Process(void) {
-  /* Local static variable must be l_ + PascalCasing (function-static scope). */
   static uint32_t l_CycleCnt_u32 = 0U;
+  uint32_t l_iter_u32;
+  uint8_t l_val_u8;
 
-  uint32_t l_iter_u32 = 0U;
-  uint8_t l_val_u8 = 0U;
-
-  /* Increment cycle counter (wrap naturally). */
   l_CycleCnt_u32++;
 
-  /* Perform a bounded amount of work per call. */
   for(l_iter_u32 = 0U; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++) {
     if((Mode_e == Tool_modeRun_e) && (Count_u32 != 0U)) {
-      (void)Tool_Pop_u8(&l_val_u8);
-      l_val_u8 = (uint8_t)(l_val_u8 ^ (uint8_t)(l_CycleCnt_u32 & 0xFFU));
-      (void)Tool_Push_u8(l_val_u8);
+      Tool_Pop_u8(&l_val_u8);
+      l_val_u8 = (uint8_t)(l_val_u8 ^ (l_CycleCnt_u32 & 0xFFU));
+      Tool_Push_u8(l_val_u8);
     } else {
-      /* No processing required; keep loop bounded and deterministic. */
-      l_val_u8 = 0U;
+      /* No operation to keep deterministic timing */
     }
   }
 }
-
 /** @} */

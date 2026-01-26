@@ -1,0 +1,154 @@
+@startuml inline_umlgraph_1.svg
+start
+:Head_u32 = 0;
+:Tail_u32 = 0;
+:Count_u32 = 0;
+:for i in [0..TOOL_BUFFER_SIZE_U32-1];
+:Buffer_u8[i] = 0;
+:StatusFlg_u32 &= ~TOOL_STATUS_ERR_U32;
+:StatusFlg_u32 &= ~TOOL_STATUS_OVF_U32;
+stop
+@enduml
+@startuml inline_umlgraph_2.svg
+start
+if (data_pcu8 == NULL or length_u32 == 0) then (yes)
+  :return 0xFFFFFFFF;
+else (no)
+  :l_len = min(length_u32, TOOL_MAX_CRC_LEN_U32);
+  :crc = 0xFFFFFFFF;
+  :for each byte;
+  :crc ^= byte;
+  :repeat 8 times;
+    if (crc & 1) then (yes)
+      :crc = (crc >> 1) ^ POLY;
+    else (no)
+      :crc = (crc >> 1);
+    endif
+  :end;
+  :crc ^= 0xFFFFFFFF;
+  :return crc;
+endif
+stop
+@enduml
+@startuml inline_umlgraph_3.svg
+start
+:Mode_e = Tool_modeIdle_e;
+:StatusFlg_u32 = 0;
+:Head_u32 = 0;
+:Tail_u32 = 0;
+:Count_u32 = 0;
+:for i in [0..TOOL_BUFFER_SIZE_U32-1];
+:Buffer_u8[i] = 0;
+stop
+@enduml
+@startuml inline_umlgraph_4.svg
+start
+:l_status_u32 = StatusFlg_u32;
+:l_status_u32 bits[1:0] = (uint32_t)Mode_e & 0x3;
+:l_status_u32 bits[31:16] = (Count_u32 & 0xFFFF);
+:return l_status_u32;
+stop
+@enduml
+@startuml inline_umlgraph_5.svg
+start
+:Head_u32 = 0;
+:Tail_u32 = 0;
+:Count_u32 = 0;
+:for i in [0..TOOL_BUFFER_SIZE_U32-1];
+:Buffer_u8[i] = 0;
+:Mode_e = Tool_modeIdle_e;
+:StatusFlg_u32 = 0;
+:StatusFlg_u32 |= TOOL_STATUS_INIT_U32;
+stop
+@enduml
+@startuml inline_umlgraph_6.svg
+start
+if (value_pu8 == NULL) then (null)
+  :StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
+  :return 3;
+elseif ((StatusFlg_u32 & TOOL_STATUS_INIT_U32) == 0) then (not init)
+  :StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
+  :*value_pu8 = 0;
+  :return 2;
+elseif (Count_u32 == 0) then (empty)
+  :*value_pu8 = 0;
+  :return 1;
+else (has data)
+  :*value_pu8 = Buffer_u8[Tail_u32];
+  :Buffer_u8[Tail_u32] = 0;
+  :Tail_u32 = (Tail_u32 + 1) % TOOL_BUFFER_SIZE_U32;
+  :Count_u32--;
+  :return 0;
+endif
+stop
+@enduml
+@startuml inline_umlgraph_7.svg
+start
+:l_CycleCnt_u32++;
+:iter_u32 = 0;
+
+while (iter_u32 < TOOL_BUFFER_SIZE_U32) is (true)
+  if (Mode_e == Tool_modeRun_e && Count_u32 != 0) then (yes)
+    :Tool_Pop_u8(&l_val_u8);
+    :l_val_u8 = l_val_u8 XOR (l_CycleCnt_u32 & 0xFF);
+    :Tool_Push_u8(l_val_u8);
+  else (no)
+    :no-op (bounded timing);
+  endif
+  :iter_u32++;
+endwhile (false)
+
+stop
+@enduml
+@startuml inline_umlgraph_8.svg
+start
+if ((StatusFlg_u32 & TOOL_STATUS_INIT_U32) == 0) then (not init)
+  :StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
+  :return 2;
+elseif (Count_u32 >= TOOL_BUFFER_SIZE_U32) then (full)
+  :StatusFlg_u32 |= TOOL_STATUS_OVF_U32;
+  :return 1;
+else (space)
+  :Buffer_u8[Head_u32] = value_u8;
+  :Head_u32 = (Head_u32 + 1) % TOOL_BUFFER_SIZE_U32;
+  :Count_u32++;
+  :StatusFlg_u32 &= ~TOOL_STATUS_OVF_U32;
+  :return 0;
+endif
+stop
+@enduml
+@startuml inline_umlgraph_9.svg
+start
+if (Count_u32 > TOOL_BUFFER_SIZE_U32) then (bad)
+  :StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
+  :return 1;
+else (ok)
+  :sum = 0;
+  :for i in [0..TOOL_BUFFER_SIZE_U32-1];
+  :sum += Buffer_u8[i];
+  if (sum > 255*TOOL_BUFFER_SIZE_U32) then (unexpected)
+    :StatusFlg_u32 |= TOOL_STATUS_UDF_U32;
+    :return 2;
+  else (normal)
+    :StatusFlg_u32 &= ~TOOL_STATUS_UDF_U32;
+    :return 0;
+  endif
+endif
+stop
+@enduml
+@startuml inline_umlgraph_10.svg
+start
+if ((StatusFlg_u32 & TOOL_STATUS_INIT_U32) == 0) then (not init)
+  :StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
+  :return 1;
+else (init)
+  if (mode is invalid) then (invalid)
+    :StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
+    :return 2;
+  else (valid)
+    :Mode_e = mode;
+    :StatusFlg_u32 &= ~TOOL_STATUS_ERR_U32;
+    :return 0;
+  endif
+endif
+@enduml
