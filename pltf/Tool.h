@@ -59,19 +59,13 @@ typedef enum {
  *
  * @par Interface summary
  *
- * | Interface              | In | Out | Type / Signature                     |
- * Param | Factor | Offset | Size | Range                              | Unit |
+ * | Interface              | In | Out | Type / Signature                     | Param | Factor | Offset | Size | Range                              | Unit |
  * |------------------------|----|-----|--------------------------------------|-------|--------|--------|------|------------------------------------|------|
- * | Internal buffer        |    |  X  | uint8_t[TOOL_BUFFER_SIZE_U32]        |
- * -   |   1    |   0    |  64  | 0..255                             | [-]  | |
- * Ring indices           |    |  X  | uint32_t (static)                   |   -
- * |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32-1          | [-]  | |
- * Element count          |    |  X  | uint32_t (static)                   |   -
- * |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32            | [-]  | |
- * Operating mode         |    |  X  | Tool_mode_e (static)                |   -
- * |   1    |   0    |   1  | 0 / 1 / 2                          | [-]  | |
- * Status flags           |    |  X  | uint32_t (static)                   |   -
- * |   1    |   0    |   1  | bitmask                            | [-]  |
+ * | Internal buffer        |    |  X  | uint8_t[TOOL_BUFFER_SIZE_U32]        |   -   |   1    |   0    |  64  | 0..255                             | [-]  |
+ * | Ring indices           |    |  X  | uint32_t (static)                   |   -   |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32-1          | [-]  |
+ * | Element count          |    |  X  | uint32_t (static)                   |   -   |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32            | [-]  |
+ * | Operating mode         |    |  X  | Tool_mode_e (static)                |   -   |   1    |   0    |   1  | 0 / 1 / 2                          | [-]  |
+ * | Status flags           |    |  X  | uint32_t (static)                   |   -   |   1    |   0    |   1  | bitmask                            | [-]  |
  *
  * @par Activity diagram (PlantUML)
  *
@@ -111,19 +105,13 @@ void Tool_Init(void);
  *
  * @par Interface summary
  *
- * | Interface              | In | Out | Type / Signature                     |
- * Param | Factor | Offset | Size | Range                              | Unit |
+ * | Interface              | In | Out | Type / Signature                     | Param | Factor | Offset | Size | Range                              | Unit |
  * |------------------------|----|-----|--------------------------------------|-------|--------|--------|------|------------------------------------|------|
- * | Internal buffer        |    |  X  | uint8_t[TOOL_BUFFER_SIZE_U32]        |
- * -   |   1    |   0    |  64  | 0..255                             | [-]  | |
- * Ring indices           |    |  X  | uint32_t (static)                   |   -
- * |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32-1          | [-]  | |
- * Element count          |    |  X  | uint32_t (static)                   |   -
- * |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32            | [-]  | |
- * Operating mode         |    |  X  | Tool_mode_e (static)                |   -
- * |   1    |   0    |   1  | 0                                 | [-]  | |
- * Status flags           |    |  X  | uint32_t (static)                   |   -
- * |   1    |   0    |   1  | bitmask                            | [-]  |
+ * | Internal buffer        |    |  X  | uint8_t[TOOL_BUFFER_SIZE_U32]        |   -   |   1    |   0    |  64  | 0..255                             | [-]  |
+ * | Ring indices           |    |  X  | uint32_t (static)                   |   -   |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32-1          | [-]  |
+ * | Element count          |    |  X  | uint32_t (static)                   |   -   |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32            | [-]  |
+ * | Operating mode         |    |  X  | Tool_mode_e (static)                |   -   |   1    |   0    |   1  | 0                                 | [-]  |
+ * | Status flags           |    |  X  | uint32_t (static)                   |   -   |   1    |   0    |   1  | bitmask                            | [-]  |
  *
  * @par Activity diagram (PlantUML)
  *
@@ -166,15 +154,12 @@ void Tool_DeInit(void);
  *
  * @par Interface summary
  *
- * | Interface        | In | Out | Type / Signature          | Param | Factor |
- * Offset | Size | Range       | Unit |
+ * | Interface        | In | Out | Type / Signature          | Param | Factor | Offset | Size | Range       | Unit |
  * |------------------|----|-----|---------------------------|-------|--------|--------|------|-------------|------|
- * | mode             | X  |     | Tool_mode_e              |   X   |   1    |
- * 0    |   1  | 0 / 1 / 2   | [-]  | | Init flag        | X  |     | uint32_t
- * (static)        |   -   |   -    |   -    |   -  | bitmask    | [-]  | |
- * Operating mode   |    |  X  | Tool_mode_e (static)     |   -   |   1    |   0
- * |   1  | 0 / 1 / 2   | [-]  | | Status flags     | X  |  X  | uint32_t
- * (static)        |   -   |   1    |   0    |   1  | bitmask    | [-]  |
+ * | mode             | X  |     | Tool_mode_e              |   X   |   1    |   0    |   1  | 0 / 1 / 2   | [-]  |
+ * | Init flag        | X  |     | uint32_t (static)        |   -   |   -    |   -    |   -  | bitmask    | [-]  |
+ * | Operating mode   |    |  X  | Tool_mode_e (static)     |   -   |   1    |   0    |   1  | 0 / 1 / 2   | [-]  |
+ * | Status flags     | X  |  X  | uint32_t (static)        |   -   |   1    |   0    |   1  | bitmask    | [-]  |
  *
  * @par Activity diagram (PlantUML)
  *
@@ -228,16 +213,12 @@ uint8_t Tool_SetMode_u8(Tool_mode_e mode);
  *
  * @par Interface summary
  *
- * | Interface        | In | Out | Type / Signature          | Param | Factor |
- * Offset | Size | Range                         | Unit |
+ * | Interface        | In | Out | Type / Signature          | Param | Factor | Offset | Size | Range                         | Unit |
  * |------------------|----|-----|---------------------------|-------|--------|--------|------|-------------------------------|------|
- * | Status flags     | X  |     | uint32_t (static)        |   -   |   1    |
- * 0    |   1  | bitmask                      | [-]  | | Operating mode   | X  |
- * | Tool_mode_e (static)     |   -   |   1    |   0    |   1  | 0 / 1 / 2 | [-]
- * | | Element count    | X  |     | uint32_t (static)        |   -   |   1    |
- * 0    |   1  | 0..TOOL_BUFFER_SIZE_U32      | [-]  | | Packed status    |    |
- * X  | uint32_t                 |   -   |   1    |   0    |   1  |
- * bits[31:16]=cnt, [1:0]=mode  | [-]  |
+ * | Status flags     | X  |     | uint32_t (static)        |   -   |   1    |   0    |   1  | bitmask                      | [-]  |
+ * | Operating mode   | X  |     | Tool_mode_e (static)     |   -   |   1    |   0    |   1  | 0 / 1 / 2                    | [-]  |
+ * | Element count    | X  |     | uint32_t (static)        |   -   |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32      | [-]  |
+ * | Packed status    |    |  X  | uint32_t                 |   -   |   1    |   0    |   1  | bits[31:16]=cnt, [1:0]=mode  | [-]  |
  *
  * @par Activity diagram (PlantUML)
  *
@@ -283,14 +264,11 @@ uint32_t Tool_GetStatus_u32(void);
  *
  * @par Interface summary
  *
- * | Interface      | In | Out | Type / Signature | Param | Factor | Offset |
- * Size | Range              | Unit |
+ * | Interface      | In | Out | Type / Signature | Param | Factor | Offset | Size | Range              | Unit |
  * |----------------|----|-----|------------------|-------|--------|--------|------|--------------------|------|
- * | data_pcu8      | X  |     | const uint8_t*   |   X   |   1    |   0    | 1
- * | pointer / NULL     | [-]  | | length_u32     | X  |     | uint32_t |   X |
- * 1    |   0    |   1  | 0..0xFFFFFFFF     | byte | | crc_u32        |    |  X
- * | uint32_t         |   -   |   1    |   0    |   1  | 0..0xFFFFFFFF     | [-]
- * |
+ * | data_pcu8      | X  |     | const uint8_t*   |   X   |   1    |   0    |   1  | pointer / NULL     | [-]  |
+ * | length_u32     | X  |     | uint32_t         |   X   |   1    |   0    |   1  | 0..0xFFFFFFFF     | byte |
+ * | crc_u32        |    |  X  | uint32_t         |   -   |   1    |   0    |   1  | 0..0xFFFFFFFF     | [-]  |
  *
  * @par Activity diagram (PlantUML)
  *
@@ -350,16 +328,12 @@ uint32_t Tool_ComputeCrc_u32(const uint8_t *data_pcu8, uint32_t length_u32);
  *
  * @par Interface summary
  *
- * | Interface      | In | Out | Type / Signature            | Param | Factor |
- * Offset | Size | Range                         | Unit |
+ * | Interface      | In | Out | Type / Signature            | Param | Factor | Offset | Size | Range                         | Unit |
  * |----------------|----|-----|-----------------------------|-------|--------|--------|------|-------------------------------|------|
- * | value_u8       | X  |     | uint8_t                     |   X   |   1    |
- * 0    |   1  | 0..255                        | [-]  | | Buffer_u8      |    |
- * X  | uint8_t[TOOL_BUFFER_SIZE]   |   -   |   1    |   0    |  64  | 0..255 |
- * [-]  | | Head / Count   | X  |  X  | uint32_t (static)           |   -   | 1
- * |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32      | [-]  | | Status flags   | X
- * |  X  | uint32_t (static)           |   -   |   1    |   0    |   1  |
- * bitmask                      | [-]  |
+ * | value_u8       | X  |     | uint8_t                     |   X   |   1    |   0    |   1  | 0..255                        | [-]  |
+ * | Buffer_u8      |    |  X  | uint8_t[TOOL_BUFFER_SIZE]   |   -   |   1    |   0    |  64  | 0..255                        | [-]  |
+ * | Head / Count   | X  |  X  | uint32_t (static)           |   -   |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32      | [-]  |
+ * | Status flags   | X  |  X  | uint32_t (static)           |   -   |   1    |   0    |   1  | bitmask                      | [-]  |
  *
  * @par Activity diagram (PlantUML)
  *
@@ -417,16 +391,12 @@ uint8_t Tool_Push_u8(uint8_t value_u8);
  *
  * @par Interface summary
  *
- * | Interface      | In | Out | Type / Signature            | Param | Factor |
- * Offset | Size | Range                         | Unit |
+ * | Interface      | In | Out | Type / Signature            | Param | Factor | Offset | Size | Range                         | Unit |
  * |----------------|----|-----|-----------------------------|-------|--------|--------|------|-------------------------------|------|
- * | value_pu8      | X  |  X  | uint8_t*                    |   X   |   1    |
- * 0    |   1  | pointer / NULL                | [-]  | | Buffer_u8      | X  |
- * X  | uint8_t[TOOL_BUFFER_SIZE]   |   -   |   1    |   0    |  64  | 0..255 |
- * [-]  | | Tail / Count   | X  |  X  | uint32_t (static)           |   -   | 1
- * |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32      | [-]  | | Status flags   | X
- * |  X  | uint32_t (static)           |   -   |   1    |   0    |   1  |
- * bitmask                      | [-]  |
+ * | value_pu8      | X  |  X  | uint8_t*                    |   X   |   1    |   0    |   1  | pointer / NULL                | [-]  |
+ * | Buffer_u8      | X  |  X  | uint8_t[TOOL_BUFFER_SIZE]   |   -   |   1    |   0    |  64  | 0..255                        | [-]  |
+ * | Tail / Count   | X  |  X  | uint32_t (static)           |   -   |   1    |   0    |   1  | 0..TOOL_BUFFER_SIZE_U32      | [-]  |
+ * | Status flags   | X  |  X  | uint32_t (static)           |   -   |   1    |   0    |   1  | bitmask                      | [-]  |
  *
  * @par Activity diagram (PlantUML)
  *
@@ -485,16 +455,11 @@ uint8_t Tool_Pop_u8(uint8_t *value_pu8);
  *
  * @par Interface summary
  *
- * | Interface          | In | Out | Data type / Signature        | Param | Data
- * factor | Data offset | Data size | Data range                     | Data unit
- * |
+ * | Interface          | In | Out | Data type / Signature        | Param | Data factor | Data offset | Data size | Data range                     | Data unit |
  * |--------------------|:--:|:---:|-------------------------------|:-----:|------------:|------------:|----------:|--------------------------------|----------|
- * | Buffer_u8          |    |  X  | uint8_t[TOOL_BUFFER_SIZE]     |   -   | 1 |
- * 0 |        64 | 0..255                         | [-]      | | Head/Tail/Count
- * |    |  X  | uint32_t (static)             |   -   |           1 | 0 | 1 |
- * 0..TOOL_BUFFER_SIZE_U32        | [-]      | | Status flags       | X  |  X  |
- * uint32_t (static)             |   -   |           1 |           0 |         1
- * | bitmask                        | [-]      |
+ * | Buffer_u8          |    |  X  | uint8_t[TOOL_BUFFER_SIZE]     |   -   |           1 |           0 |        64 | 0..255                         | [-]      |
+ * | Head/Tail/Count    |    |  X  | uint32_t (static)             |   -   |           1 |           0 |         1 | 0..TOOL_BUFFER_SIZE_U32        | [-]      |
+ * | Status flags       | X  |  X  | uint32_t (static)             |   -   |           1 |           0 |         1 | bitmask                        | [-]      |
  *
  * @par Activity diagram (PlantUML)
  *
@@ -540,18 +505,12 @@ void Tool_Clear(void);
  *
  * @par Interface summary
  *
- * | Interface      | In | Out | Data type / Signature        | Param | Data
- * factor | Data offset | Data size | Data range                     | Data unit
- * |
+ * | Interface      | In | Out | Data type / Signature        | Param | Data factor | Data offset | Data size | Data range                     | Data unit |
  * |----------------|:--:|:---:|-------------------------------|:-----:|------------:|------------:|----------:|--------------------------------|----------|
- * | Buffer_u8      | X  |     | uint8_t[TOOL_BUFFER_SIZE]     |   -   | 1 | 0 |
- * 64 | 0..255                         | [-]      | | Count_u32      | X  | |
- * uint32_t (static)             |   -   |           1 |           0 |         1
- * | 0..TOOL_BUFFER_SIZE_U32        | [-]      | | Status flags   | X  |  X  |
- * uint32_t (static)             |   -   |           1 |           0 |         1
- * | bitmask                        | [-]      | | Return code    |    |  X  |
- * uint8_t                       |   -   |           1 |           0 |         1
- * | 0 / 1 / 2                      | [-]      |
+ * | Buffer_u8      | X  |     | uint8_t[TOOL_BUFFER_SIZE]     |   -   |           1 |           0 |        64 | 0..255                         | [-]      |
+ * | Count_u32      | X  |     | uint32_t (static)             |   -   |           1 |           0 |         1 | 0..TOOL_BUFFER_SIZE_U32        | [-]      |
+ * | Status flags   | X  |  X  | uint32_t (static)             |   -   |           1 |           0 |         1 | bitmask                        | [-]      |
+ * | Return code    |    |  X  | uint8_t                       |   -   |           1 |           0 |         1 | 0 / 1 / 2                      | [-]      |
  * @par Activity diagram (PlantUML)
  *
  * @startuml
@@ -605,20 +564,13 @@ uint8_t Tool_RunTst_u8(void);
  *
  * @par Interface summary
  *
- * | Interface                    | In | Out | Data type / Signature        |
- Param | Data factor | Data offset | Data size | Data range                   |
- Data unit |
+ * | Interface                    | In | Out | Data type / Signature        | Param | Data factor | Data offset | Data size | Data range                   | Data unit |
  * |-----------------------------|:--:|:---:|-------------------------------|:-----:|------------:|------------:|----------:|------------------------------|----------|
- * | Mode_e                      | X  |     | Tool_mode_e (static)          | -
- |           1 |           0 |         1 | 0 / 1 / 2                    | [-] |
- * | Count_u32                   | X  |  X  | uint32_t (static)             | -
- |           1 |           0 |         1 | 0..TOOL_BUFFER_SIZE_U32      | [-] |
- * | Ring buffer                 | X  |  X  | uint8_t[TOOL_BUFFER_SIZE_U32] | -
- |           1 |           0 |        64 | 0..255                       | [-] |
- * | l_CycleCnt_u32              | X  |  X  | uint32_t (static local)       | -
- |           1 |           0 |         1 | 0..0xFFFFFFFF                | [-] |
- * | Tool_Pop_u8 / Tool_Push_u8  | X  |  X  | function calls                | -
- |           - |           - |         - | see respective interfaces    | [-] |
+ * | Mode_e                      | X  |     | Tool_mode_e (static)          |   -   |           1 |           0 |         1 | 0 / 1 / 2                    | [-]      |
+ * | Count_u32                   | X  |  X  | uint32_t (static)             |   -   |           1 |           0 |         1 | 0..TOOL_BUFFER_SIZE_U32      | [-]      |
+ * | Ring buffer                 | X  |  X  | uint8_t[TOOL_BUFFER_SIZE_U32] |   -   |           1 |           0 |        64 | 0..255                       | [-]      |
+ * | l_CycleCnt_u32              | X  |  X  | uint32_t (static local)       |   -   |           1 |           0 |         1 | 0..0xFFFFFFFF                | [-]      |
+ * | Tool_Pop_u8 / Tool_Push_u8  | X  |  X  | function calls                |   -   |           - |           - |         - | see respective interfaces    | [-]      |
 
  * @par Activity diagram (PlantUML)
  *
