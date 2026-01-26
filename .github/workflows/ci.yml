@@ -54,7 +54,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
-        
+
+
+      - name: Debug clang-format config presence
+        run: |
+          clang-format --version
+          echo "Repo root:"
+          ls -la
+          echo "unitTestLauncher content:"
+          ls -la unitTestLauncher || true
+          echo "Check .clang-format:"
+          ls -la unitTestLauncher/.clang-format || true
+
       - name: Run clang-format on all .c and .h files
         id: clang_format
         run: |
