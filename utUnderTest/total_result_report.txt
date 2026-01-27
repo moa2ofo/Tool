@@ -1,3 +1,4 @@
-| function_name | total | passed | failed | ignored | linesCvrg | branchesCvrg | Date and time  | Tester |
-|---------------|-------|--------|--------|---------|-----------|--------------|----------------|--------|
-| Tool_Clear    | 6     | 6      | 0      | 0       | 0.0%      | -%           | 26/01/26 14:38 | runner |
+| function_name | total | passed | failed | ignored | linesCvrg | branchesCvrg | Date and time  | Tester  |
+|---------------|-------|--------|--------|---------|-----------|--------------|----------------|---------|
+| Tool_Clear    | 6     | 6      | 0      | 0       | 100.0%    | 100.0%       | 27/01/26 13:57 | MOA2OFO |
+| Tool_Process  | 2     | 2      | 0      | 0       | 100.0%    | 83.3%        | 27/01/26 13:57 | MOA2OFO |
