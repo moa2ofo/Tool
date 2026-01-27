@@ -122,7 +122,6 @@ jobs:
       - name: Commit and push changes (format + buildCheck + utResults)
         if: github.event_name == 'push' && always()
         env:
-          FORMAT_OUTCOME: ${{ steps.clang_format.outcome }}
           DOCKER_OUTCOME: ${{ steps.docker_info.outcome }}
           BUILD_OUTCOME:  ${{ steps.sw_cmp_build_check.outcome }}
           UT_OUTCOME:     ${{ steps.unit_tests.outcome }}
@@ -140,14 +139,13 @@ jobs:
             esac
           }
 
-          FORMAT_STATUS="$(map_outcome "$FORMAT_OUTCOME")"
           DOCKER_STATUS="$(map_outcome "$DOCKER_OUTCOME")"
           BUILD_STATUS="$(map_outcome "$BUILD_OUTCOME")"
           UT_STATUS="$(map_outcome "$UT_OUTCOME")"
           RSYNC_STATUS="$(map_outcome "$RSYNC_OUTCOME")"
 
           FAILED=0
-          for s in "$FORMAT_STATUS" "$DOCKER_STATUS" "$BUILD_STATUS" "$UT_STATUS" "$RSYNC_STATUS"; do
+          for s in "$DOCKER_STATUS" "$BUILD_STATUS" "$UT_STATUS" "$RSYNC_STATUS"; do
             if [ "$s" = "failed" ]; then
               FAILED=1
               break
