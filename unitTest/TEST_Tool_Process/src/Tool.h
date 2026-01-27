@@ -614,7 +614,12 @@ uint8_t Tool_RunTst_u8(void);
  * @return void
  */
 //void Tool_Process(void);
-uint8_t ModuleName_FunctionEx_(uint32_t in_id_u32, int32_t in_mode_e, const uint8_t *in_cfg_pcu8, uint8_t *in_buf_pu8, uint16_t in_bufLen_u16, uint8_t *out_status_pu8);
+uint8_t ModuleName_FunctionEx_(uint32_t       in_id_u32,
+                              int32_t        in_mode_e,
+                              const uint8_t *in_cfg_pcu8,
+                              uint8_t       *in_buf_pu8,
+                              uint16_t       in_bufLen_u16,
+                              uint8_t       *out_status_pu8);
 
 #endif /* TOOL_H */
 
