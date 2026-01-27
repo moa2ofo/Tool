@@ -155,15 +155,14 @@ jobs:
           mkdir -p ci_status
 
           if [ "$FAILED" -eq 1 ]; then
-            STATUS_LINE="CI FAILED"
+            STATUS_LINE="GIT ACTION FAILED"
           else
-            STATUS_LINE="CI PASSED"
+            STATUS_LINE="GIT ACTION PERFORMED"
           fi
 
           {
             echo "${STATUS_LINE}"
             echo "Run: ${RUN_URL}"
-            echo "clang-format: ${FORMAT_STATUS}"
             echo "docker info: ${DOCKER_STATUS}"
             echo "swCmpBuildCheck: ${BUILD_STATUS}"
             echo "unit tests: ${UT_STATUS}"
@@ -177,9 +176,9 @@ jobs:
             echo "No changes to commit."
           else
             if [ "$FAILED" -eq 1 ]; then
-              git commit -m "CI failed: fmt=${FORMAT_STATUS}, docker=${DOCKER_STATUS}, build=${BUILD_STATUS}, ut=${UT_STATUS}, rsync=${RSYNC_STATUS} [skip ci]"
+              git commit -m "[GitAct_Failed] - Git actions docker=${DOCKER_STATUS}, build=${BUILD_STATUS}, ut=${UT_STATUS}, rsync=${RSYNC_STATUS} [skip ci]"
             else
-              git commit -m "unit test performed [skip ci]"
+              git commit -m "[GitAct_Performed] - All git actions have been performed"
             fi
             git push
           fi
