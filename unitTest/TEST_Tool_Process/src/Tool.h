@@ -486,7 +486,7 @@ uint8_t Tool_Push_u8(uint8_t value_u8);
  * - 2: module not initialized
  * - 3: NULL output pointer
  */
-uint8_t Tool_Pop_u8(uint8_t *value_pu8, int testA);
+uint8_t Tool_Pop_u8(uint8_t *value_pu8);
 
 /**
  * @brief Run a lightweight self-test on Tool internal state.

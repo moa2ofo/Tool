@@ -273,7 +273,7 @@ uint32_t Tool_ComputeCrc_u32(const uint8_t *data_pcu8, uint32_t length_u32);
 # 414 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_Push_u8(uint8_t value_u8);
 # 489 "utExecutionAndResults/utUnderTest/src/Tool.h"
-uint8_t Tool_Pop_u8(uint8_t *value_pu8, int testA);
+uint8_t Tool_Pop_u8(uint8_t *value_pu8);
 # 557 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_RunTst_u8(void);
 # 617 "utExecutionAndResults/utUnderTest/src/Tool.h"
@@ -2333,22 +2333,20 @@ void Tool_Pop_u8_CMockStopIgnore(void);
 void Tool_Pop_u8_CMockExpectAnyArgsAndReturn(UNITY_UINT cmock_line, uint8_t cmock_to_return);
 
 
-void Tool_Pop_u8_CMockExpectAndReturn(UNITY_UINT cmock_line, uint8_t* value_pu8, int testA, uint8_t cmock_to_return);
-typedef uint8_t (* CMOCK_Tool_Pop_u8_CALLBACK)(uint8_t* value_pu8, int testA, int cmock_num_calls);
+void Tool_Pop_u8_CMockExpectAndReturn(UNITY_UINT cmock_line, uint8_t* value_pu8, uint8_t cmock_to_return);
+typedef uint8_t (* CMOCK_Tool_Pop_u8_CALLBACK)(uint8_t* value_pu8, int cmock_num_calls);
 void Tool_Pop_u8_AddCallback(CMOCK_Tool_Pop_u8_CALLBACK Callback);
 void Tool_Pop_u8_Stub(CMOCK_Tool_Pop_u8_CALLBACK Callback);
 
 
 
-void Tool_Pop_u8_CMockExpectWithArrayAndReturn(UNITY_UINT cmock_line, uint8_t* value_pu8, int value_pu8_Depth, int testA, uint8_t cmock_to_return);
+void Tool_Pop_u8_CMockExpectWithArrayAndReturn(UNITY_UINT cmock_line, uint8_t* value_pu8, int value_pu8_Depth, uint8_t cmock_to_return);
 
 
 
 void Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(UNITY_UINT cmock_line, uint8_t const* value_pu8, size_t cmock_size);
 
 void Tool_Pop_u8_CMockIgnoreArg_value_pu8(UNITY_UINT cmock_line);
-
-void Tool_Pop_u8_CMockIgnoreArg_testA(UNITY_UINT cmock_line);
 
 
 void Tool_RunTst_u8_CMockIgnoreAndReturn(UNITY_UINT cmock_line, uint8_t cmock_to_return);
@@ -2733,10 +2731,9 @@ void test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2(void) {
     uint8_t expected = (uint8_t)(popped ^ cycle);
 
     Tool_Pop_u8_CMockExpectAnyArgsAndReturn(40, 1U);
-    Tool_Pop_u8_CMockIgnoreArg_testA(41);
-    Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(42, &popped, sizeof(uint8_t));
+    Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(41, &popped, sizeof(uint8_t));
 
-    Tool_Push_u8_CMockExpectAndReturn(44, expected, 0);
+    Tool_Push_u8_CMockExpectAndReturn(43, expected, 0);
   }
 
   Tool_Process();

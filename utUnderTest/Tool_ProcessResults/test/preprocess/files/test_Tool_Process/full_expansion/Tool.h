@@ -272,7 +272,7 @@ uint32_t Tool_ComputeCrc_u32(const uint8_t *data_pcu8, uint32_t length_u32);
 # 414 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_Push_u8(uint8_t value_u8);
 # 489 "utExecutionAndResults/utUnderTest/src/Tool.h"
-uint8_t Tool_Pop_u8(uint8_t *value_pu8, int testA);
+uint8_t Tool_Pop_u8(uint8_t *value_pu8);
 # 557 "utExecutionAndResults/utUnderTest/src/Tool.h"
 uint8_t Tool_RunTst_u8(void);
 # 617 "utExecutionAndResults/utUnderTest/src/Tool.h"

@@ -85,7 +85,7 @@ int main(void)
 {
   UnityBegin("test_Tool_Process.c");
   run_test(test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2", 30);
-  run_test(test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2", 50);
+  run_test(test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2", 49);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

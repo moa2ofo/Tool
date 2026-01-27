@@ -38,7 +38,6 @@ void test_Tool_Process_WhenRunModeWithData_ProcessesBuffer(void) {
     uint8_t expected = (uint8_t)(popped ^ cycle);
 
     Tool_Pop_u8_ExpectAnyArgsAndReturn(1U);
-    Tool_Pop_u8_IgnoreArg_testA();
     Tool_Pop_u8_ReturnThruPtr_value_pu8(&popped); // use size too if your mock requires it
     // use _Expect (not _ExpectAndReturn) if Tool_Push_u8 is void
     Tool_Push_u8_ExpectAndReturn(expected, 0);
@@ -58,7 +57,6 @@ void test_Tool_Process_WhenRunModeWithData_ProcessesBuffer1(void) {
     uint8_t expected = (uint8_t)(popped ^ cycle);
 
     Tool_Pop_u8_ExpectAnyArgsAndReturn(1U);
-    Tool_Pop_u8_IgnoreArg_testA();
     Tool_Pop_u8_ReturnThruPtr_value_pu8(&popped); // use size too if your mock requires it
     // use _Expect (not _ExpectAndReturn) if Tool_Push_u8 is void
     Tool_Push_u8_ExpectAndReturn(expected, 0);

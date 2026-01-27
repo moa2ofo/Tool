@@ -33,10 +33,9 @@ void test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2(void)
     uint8_t expected = (uint8_t)(popped ^ cycle);
 
     Tool_Pop_u8_CMockExpectAnyArgsAndReturn(40, 1U);
-    Tool_Pop_u8_CMockIgnoreArg_testA(41);
-    Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(42, &popped, sizeof(uint8_t));
+    Tool_Pop_u8_CMockReturnMemThruPtr_value_pu8(41, &popped, sizeof(uint8_t));
 
-    Tool_Push_u8_CMockExpectAndReturn(44, expected, 0);
+    Tool_Push_u8_CMockExpectAndReturn(43, expected, 0);
   }
 
   Tool_Process();
