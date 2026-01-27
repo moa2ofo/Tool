@@ -13,19 +13,19 @@ Tool_mode_e Mode_e = Tool_modeIdle_e;
 
 
 void Tool_Process(void) {
-  static uint32_t l_CycleCnt_u32 = 0u;
+  static uint32_t l_CycleCnt_u32 = 0U;
   uint32_t l_iter_u32;
   uint8_t l_val_u8;
 
   l_CycleCnt_u32++;
 
-  for(l_iter_u32 = 0u; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++) {
-    if((Mode_e == Tool_modeRun_e) && (Count_u32 != 0u)) {
+  for(l_iter_u32 = 0U; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++) {
+    if((Mode_e == Tool_modeRun_e) && (Count_u32 != 0U)) {
       Tool_Pop_u8(&l_val_u8);
-      l_val_u8 = l_val_u8 ^ (uint8_t)(l_CycleCnt_u32 & 0xFFu);
+      l_val_u8 ^= (uint8_t)(l_CycleCnt_u32 & 0xFFU);
       Tool_Push_u8(l_val_u8);
     } else {
-      /* No operation to keep deterministic timing */
+      /* no operation to keep deterministic timing */
     }
   }
 }
