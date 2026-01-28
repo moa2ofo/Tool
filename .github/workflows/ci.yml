@@ -98,13 +98,11 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          sudo apt-get update
-          sudo apt-get install -y rsync
 
           mkdir -p utResults
 
           if [ -d "unitTestLauncher/utExecutionAndResults/utResults" ]; then
-            rsync -a --delete unitTestLauncher/utExecutionAndResults/utResults/ utResults/
+            rsync -a --delete unitTestLauncher/utExecutionAndResults/utResults/ UnitTestResults/
           else
             echo "No launcher utResults directory found; skipping rsync."
           fi
