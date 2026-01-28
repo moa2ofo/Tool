@@ -1,7 +1,7 @@
-GIT ACTION PERFORMED
-Run: https://github.com/moa2ofo/Tool/actions/runs/21442504126
+GIT ACTION FAILED
+Run: https://github.com/moa2ofo/Tool/actions/runs/21443258116
 docker info: performed
 swCmpBuildCheck: performed
 unit tests: performed
-rsync utResults: performed
-Timestamp (UTC): 2026-01-28T14:39:57Z
+rsync utResults: failed
+Timestamp (UTC): 2026-01-28T15:01:43Z
