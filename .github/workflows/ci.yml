@@ -91,7 +91,7 @@ jobs:
         id: unit_tests
         continue-on-error: true
         run: |
-          script -q -e -c "python3 unitTestLauncher/unitTestsLauncher.py all" /dev/null
+          script -q -e -c "sudo -E python3 unitTestLauncher/unitTestsLauncher.py all" /dev/null
 
       - name: Replace utResults with launcher results (robust)
         id: replace_ut_results
