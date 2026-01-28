@@ -17,6 +17,8 @@ extern void setUp(void);
 extern void tearDown(void);
 extern void test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2(void);
 extern void test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2(void);
+extern void test_Tool_Process_WhenNotRunModeWithNoData_ProcessesBuffer2(void);
+extern void test_Tool_Process_WhenRunModeWithNoData_ProcessesBuffer2(void);
 
 
 /*=======Mock Management=====*/
@@ -84,8 +86,10 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
 int main(void)
 {
   UnityBegin("test_Tool_Process.c");
-  run_test(test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2", 30);
-  run_test(test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2", 49);
+  run_test(test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2", 46);
+  run_test(test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2", 67);
+  run_test(test_Tool_Process_WhenNotRunModeWithNoData_ProcessesBuffer2, "test_Tool_Process_WhenNotRunModeWithNoData_ProcessesBuffer2", 78);
+  run_test(test_Tool_Process_WhenRunModeWithNoData_ProcessesBuffer2, "test_Tool_Process_WhenRunModeWithNoData_ProcessesBuffer2", 88);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();
