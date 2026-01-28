@@ -13,7 +13,7 @@ Tool_mode_e Mode_e = Tool_modeIdle_e;
 
 
 void Tool_Process(void) {
-  static uint32_t l_CycleCnt_u32 = 0u;
+static uint32_t l_CycleCnt_u32 = 0u;
   uint32_t l_iter_u32;
   uint8_t l_val_u8;
 
