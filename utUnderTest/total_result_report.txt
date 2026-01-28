@@ -1,4 +1,4 @@
 | function_name | total | passed | failed | ignored | linesCvrg | branchesCvrg | Date and time  | Tester |
 |---------------|-------|--------|--------|---------|-----------|--------------|----------------|--------|
-| Tool_Clear    | 6     | 6      | 0      | 0       | 0.0%      | -%           | 28/01/26 08:17 | runner |
-| Tool_Process  | 2     | 2      | 0      | 0       | 0.0%      | -%           | 28/01/26 08:17 | runner |
+| Tool_Clear    | 6     | 6      | 0      | 0       | 0.0%      | -%           | 28/01/26 10:32 | runner |
+| Tool_Process  | 2     | 2      | 0      | 0       | 0.0%      | -%           | 28/01/26 10:32 | runner |
