@@ -96,40 +96,39 @@ uint32_t Tool_GetStatus_u32(void) {
 
   /* Encode mode in lowest 2 bits (kept simple). */
   l_mode_u32 = (uint32_t)Mode_e;
-  l_status_u32 &= 0xFFFFFFFCUL;
-  l_status_u32 |= (l_mode_u32 & 0x3UL);
+  l_status_u32 &= (uint32_t)0xFFFFFFFCUL;
+  l_status_u32 |= (uint32_t)(l_mode_u32 & 0x3UL);
 
   /* Expose current fill level in upper 16 bits. */
-  l_status_u32 &= 0x0000FFFFUL;
-  l_status_u32 |= ((Count_u32 & 0xFFFFUL) << 16U);
+  l_status_u32 &=  (uint32_t)0x0000FFFFUL;
+  l_status_u32 |=  (uint32_t)((Count_u32 & 0xFFFFUL) << 16U);
 
   return l_status_u32;
 }
 
 uint32_t Tool_ComputeCrc_u32(const uint8_t *data_pcu8, uint32_t length_u32) {
-  uint32_t l_crc_u32 = TOOL_CRC_INIT_U32;
-  uint32_t l_i_u32 = 0U;
-  uint32_t l_len_u32 = 0U;
+  uint32_t l_crc_u32 =  (uint32_t)TOOL_CRC_INIT_U32; 
+
 
   /* Defensive: null pointer or zero length -> return init CRC. */
   if((data_pcu8 == NULL) || (length_u32 == 0U)) {
-    l_crc_u32 = TOOL_CRC_INIT_U32;
+    l_crc_u32 =  (uint32_t)TOOL_CRC_INIT_U32;
   } else {
     /* Bounded iteration: cap to TOOL_MAX_CRC_LEN_U32. */
-    l_len_u32 = (length_u32 > TOOL_MAX_CRC_LEN_U32) ? TOOL_MAX_CRC_LEN_U32 : length_u32;
+    uint32_t l_len_u32 = (length_u32 > TOOL_MAX_CRC_LEN_U32) ? TOOL_MAX_CRC_LEN_U32 : length_u32;
 
-    for(l_i_u32 = 0U; l_i_u32 < l_len_u32; l_i_u32++) {
+    for(uint32_t l_i_u32 = 0U; l_i_u32 < l_len_u32; l_i_u32++) {
       uint32_t l_bit_u32 = 0U;
 
       l_crc_u32 ^= (uint32_t)data_pcu8[l_i_u32];
       for(l_bit_u32 = 0U; l_bit_u32 < 8U; l_bit_u32++) {
-        l_crc_u32 = ((l_crc_u32 & 1U) != 0U) ? ((l_crc_u32 >> 1U) ^ TOOL_CRC_POLY_U32) : (l_crc_u32 >> 1U);
+        l_crc_u32 =  (uint32_t)(((l_crc_u32 & 1U) != 0U) ? ((l_crc_u32 >> 1U) ^ TOOL_CRC_POLY_U32) : (l_crc_u32 >> 1U));
       }
     }
   }
 
   /* Finalize CRC. */
-  l_crc_u32 ^= 0xFFFFFFFFUL;
+  l_crc_u32 ^=  (uint32_t)0xFFFFFFFFUL;
 
   return l_crc_u32;
 }
@@ -203,15 +202,16 @@ void Tool_Clear(void) {
 }
 uint8_t Tool_RunTst_u8(void) {
   uint8_t l_ret_u8 = 0U;
-  uint32_t l_sum_u32 = 0U;
-  uint32_t l_i_u32 = 0U;
+  
+
 
   /* Simple self-test: validate internal invariants and compute a checksum. */
   if(Count_u32 > TOOL_BUFFER_SIZE_U32) {
     StatusFlg_u32 |= TOOL_STATUS_ERR_U32;
     l_ret_u8 = 1U;
   } else {
-    for(l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) {
+    uint32_t l_sum_u32 = 0U;
+    for(uint32_t l_i_u32 = 0U; l_i_u32 < TOOL_BUFFER_SIZE_U32; l_i_u32++) {
       l_sum_u32 += (uint32_t)Buffer_u8[l_i_u32];
     }
 
@@ -230,19 +230,19 @@ uint8_t Tool_RunTst_u8(void) {
 }
 
 void Tool_Process(void) {
-  static uint32_t l_CycleCnt_u32 = 0U;
+  static uint32_t l_CycleCnt_u32 = 0u;
   uint32_t l_iter_u32;
   uint8_t l_val_u8;
 
   l_CycleCnt_u32++;
 
-  for(l_iter_u32 = 0U; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++) {
-    if((Mode_e == Tool_modeRun_e) && (Count_u32 != 0U)) {
-      Tool_Pop_u8(&l_val_u8);
-      l_val_u8 ^= (uint8_t)(l_CycleCnt_u32 & 0xFFU);
-      Tool_Push_u8(l_val_u8);
+  for(l_iter_u32 = 0u; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++) {
+    if((Mode_e == Tool_modeRun_e) && (Count_u32 != 0u)) {
+      (void)Tool_Pop_u8(&l_val_u8);
+      l_val_u8 = l_val_u8 ^ (uint8_t)(l_CycleCnt_u32 & 0xFFu);
+      (void)Tool_Push_u8(l_val_u8);
     } else {
-      /* no operation to keep deterministic timing */
+      /* No operation to keep deterministic timing */
     }
   }
 }
