@@ -66,7 +66,7 @@ jobs:
       - name: Verify Docker is available
         id: docker_info
         continue-on-error: true
-        run: sudo docker info
+        run: docker info
 
       # -----------------------------
       # swCmpBuildCheck (always runs)
@@ -84,30 +84,20 @@ jobs:
         id: fix_permissions
         continue-on-error: true
         run: |
+          # Crea la struttura base
           sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build
-          sudo chmod -R 777 unitTestLauncher/utExecutionAndResults
+
+          # Applica i permessi a tutta la struttura
+          sudo chmod -R 777 .
+
 
       - name: Run unit tests (launcher repo)
         id: unit_tests
         continue-on-error: true
         run: |
-          script -q -e -c "python3 unitTestLauncher/unitTestsLauncher.py all" /dev/null
+          script -q -e -c "sudo -E python3 unitTestLauncher/unitTestsLauncher.py all" /dev/null
 
-      - name: Replace utResults with launcher results (robust)
-        id: replace_ut_results
-        if: always()
-        continue-on-error: true
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y rsync
 
-          mkdir -p utResults
-
-          if [ -d "unitTestLauncher/utExecutionAndResults/utResults" ]; then
-            rsync -a --delete unitTestLauncher/utExecutionAndResults/utResults/ utResults/
-          else
-            echo "No launcher utResults directory found; skipping rsync."
-          fi
       - name: Delete unitTestLauncher folder
         if: always()
         run: |
@@ -122,11 +112,9 @@ jobs:
       - name: Commit and push changes (format + buildCheck + utResults)
         if: github.event_name == 'push' && always()
         env:
-          FORMAT_OUTCOME: ${{ steps.clang_format.outcome }}
           DOCKER_OUTCOME: ${{ steps.docker_info.outcome }}
           BUILD_OUTCOME:  ${{ steps.sw_cmp_build_check.outcome }}
           UT_OUTCOME:     ${{ steps.unit_tests.outcome }}
-          RSYNC_OUTCOME:  ${{ steps.replace_ut_results.outcome }}
           RUN_URL:        ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           git config --global user.name "github-actions"
@@ -140,14 +128,13 @@ jobs:
             esac
           }
 
-          FORMAT_STATUS="$(map_outcome "$FORMAT_OUTCOME")"
           DOCKER_STATUS="$(map_outcome "$DOCKER_OUTCOME")"
           BUILD_STATUS="$(map_outcome "$BUILD_OUTCOME")"
           UT_STATUS="$(map_outcome "$UT_OUTCOME")"
-          RSYNC_STATUS="$(map_outcome "$RSYNC_OUTCOME")"
+
 
           FAILED=0
-          for s in "$FORMAT_STATUS" "$DOCKER_STATUS" "$BUILD_STATUS" "$UT_STATUS" "$RSYNC_STATUS"; do
+          for s in "$DOCKER_STATUS" "$BUILD_STATUS" "$UT_STATUS" ; do
             if [ "$s" = "failed" ]; then
               FAILED=1
               break
@@ -157,19 +144,17 @@ jobs:
           mkdir -p ci_status
 
           if [ "$FAILED" -eq 1 ]; then
-            STATUS_LINE="CI FAILED"
+            STATUS_LINE="GIT ACTION FAILED"
           else
-            STATUS_LINE="CI PASSED"
+            STATUS_LINE="GIT ACTION PERFORMED"
           fi
 
           {
             echo "${STATUS_LINE}"
             echo "Run: ${RUN_URL}"
-            echo "clang-format: ${FORMAT_STATUS}"
             echo "docker info: ${DOCKER_STATUS}"
             echo "swCmpBuildCheck: ${BUILD_STATUS}"
             echo "unit tests: ${UT_STATUS}"
-            echo "rsync utResults: ${RSYNC_STATUS}"
             echo "Timestamp (UTC): $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
           } > ci_status/last_status
 
@@ -179,9 +164,9 @@ jobs:
             echo "No changes to commit."
           else
             if [ "$FAILED" -eq 1 ]; then
-              git commit -m "CI failed: fmt=${FORMAT_STATUS}, docker=${DOCKER_STATUS}, build=${BUILD_STATUS}, ut=${UT_STATUS}, rsync=${RSYNC_STATUS} [skip ci]"
+              git commit -m "[GitAct_Failed] - Git actions docker=${DOCKER_STATUS}, build=${BUILD_STATUS}, ut=${UT_STATUS} [skip ci]"
             else
-              git commit -m "unit test performed [skip ci]"
+              git commit -m "[GitAct_Performed] - All git actions have been performed"
             fi
             git push
           fi

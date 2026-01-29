@@ -21,9 +21,9 @@ void Tool_Process(void) {
 
   for(l_iter_u32 = 0u; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++) {
     if((Mode_e == Tool_modeRun_e) && (Count_u32 != 0u)) {
-      Tool_Pop_u8(&l_val_u8);
+      (void)Tool_Pop_u8(&l_val_u8);
       l_val_u8 = l_val_u8 ^ (uint8_t)(l_CycleCnt_u32 & 0xFFu);
-      Tool_Push_u8(l_val_u8);
+      (void)Tool_Push_u8(l_val_u8);
     } else {
       /* No operation to keep deterministic timing */
     }

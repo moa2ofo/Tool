@@ -88,31 +88,22 @@ uint8_t Tool_SetMode_u8(Tool_mode_e mode) {
 }
 
 uint32_t Tool_GetStatus_u32(void) {
-  uint32_t l_status_u32 = 0U;
-  uint32_t l_mode_u32 = 0U;
+  uint32_t l_status_u32;
 
-  /* Snapshot internal flags first. */
   l_status_u32 = StatusFlg_u32;
-
-  /* Encode mode in lowest 2 bits (kept simple). */
-  l_mode_u32 = (uint32_t)Mode_e;
-  l_status_u32 &= (uint32_t)0xFFFFFFFCUL;
-  l_status_u32 |= (uint32_t)(l_mode_u32 & 0x3UL);
-
-  /* Expose current fill level in upper 16 bits. */
-  l_status_u32 &=  (uint32_t)0x0000FFFFUL;
-  l_status_u32 |=  (uint32_t)((Count_u32 & 0xFFFFUL) << 16U);
+  l_status_u32 &= ~0x3UL;                         /* Clear bits [1:0] */
+  l_status_u32 |= ((uint32_t)Mode_e & 0x3UL);     /* Set bits [1:0] to Mode_e */
+  l_status_u32 &= 0x0000FFFFUL;                   /* Keep lower 16 bits */
+  l_status_u32 |= ((Count_u32 & 0xFFFFUL) << 16); /* Set bits [31:16] to Count_u32 lower 16 bits */
 
   return l_status_u32;
 }
-
 uint32_t Tool_ComputeCrc_u32(const uint8_t *data_pcu8, uint32_t length_u32) {
-  uint32_t l_crc_u32 =  (uint32_t)TOOL_CRC_INIT_U32; 
-
+  uint32_t l_crc_u32 = (uint32_t)TOOL_CRC_INIT_U32;
 
   /* Defensive: null pointer or zero length -> return init CRC. */
   if((data_pcu8 == NULL) || (length_u32 == 0U)) {
-    l_crc_u32 =  (uint32_t)TOOL_CRC_INIT_U32;
+    l_crc_u32 = (uint32_t)TOOL_CRC_INIT_U32;
   } else {
     /* Bounded iteration: cap to TOOL_MAX_CRC_LEN_U32. */
     uint32_t l_len_u32 = (length_u32 > TOOL_MAX_CRC_LEN_U32) ? TOOL_MAX_CRC_LEN_U32 : length_u32;
@@ -122,13 +113,13 @@ uint32_t Tool_ComputeCrc_u32(const uint8_t *data_pcu8, uint32_t length_u32) {
 
       l_crc_u32 ^= (uint32_t)data_pcu8[l_i_u32];
       for(l_bit_u32 = 0U; l_bit_u32 < 8U; l_bit_u32++) {
-        l_crc_u32 =  (uint32_t)(((l_crc_u32 & 1U) != 0U) ? ((l_crc_u32 >> 1U) ^ TOOL_CRC_POLY_U32) : (l_crc_u32 >> 1U));
+        l_crc_u32 = (uint32_t)(((l_crc_u32 & 1U) != 0U) ? ((l_crc_u32 >> 1U) ^ TOOL_CRC_POLY_U32) : (l_crc_u32 >> 1U));
       }
     }
   }
 
   /* Finalize CRC. */
-  l_crc_u32 ^=  (uint32_t)0xFFFFFFFFUL;
+  l_crc_u32 ^= (uint32_t)0xFFFFFFFFUL;
 
   return l_crc_u32;
 }
@@ -202,8 +193,6 @@ void Tool_Clear(void) {
 }
 uint8_t Tool_RunTst_u8(void) {
   uint8_t l_ret_u8 = 0U;
-  
-
 
   /* Simple self-test: validate internal invariants and compute a checksum. */
   if(Count_u32 > TOOL_BUFFER_SIZE_U32) {
