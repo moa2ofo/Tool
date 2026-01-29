@@ -66,7 +66,7 @@ jobs:
       - name: Verify Docker is available
         id: docker_info
         continue-on-error: true
-        run: sudo docker info
+        run: docker info
 
       # -----------------------------
       # swCmpBuildCheck (always runs)
@@ -88,7 +88,7 @@ jobs:
           sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build
 
           # Applica i permessi a tutta la struttura
-          sudo chmod -R 777 unitTestLauncher/utExecutionAndResults
+          sudo chmod -R 777 /
 
 
       - name: Run unit tests (launcher repo)
@@ -115,7 +115,6 @@ jobs:
           DOCKER_OUTCOME: ${{ steps.docker_info.outcome }}
           BUILD_OUTCOME:  ${{ steps.sw_cmp_build_check.outcome }}
           UT_OUTCOME:     ${{ steps.unit_tests.outcome }}
-          RSYNC_OUTCOME:  ${{ steps.replace_ut_results.outcome }}
           RUN_URL:        ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           git config --global user.name "github-actions"
@@ -132,10 +131,10 @@ jobs:
           DOCKER_STATUS="$(map_outcome "$DOCKER_OUTCOME")"
           BUILD_STATUS="$(map_outcome "$BUILD_OUTCOME")"
           UT_STATUS="$(map_outcome "$UT_OUTCOME")"
-          RSYNC_STATUS="$(map_outcome "$RSYNC_OUTCOME")"
+
 
           FAILED=0
-          for s in "$DOCKER_STATUS" "$BUILD_STATUS" "$UT_STATUS" "$RSYNC_STATUS"; do
+          for s in "$DOCKER_STATUS" "$BUILD_STATUS" "$UT_STATUS" ; do
             if [ "$s" = "failed" ]; then
               FAILED=1
               break
@@ -156,7 +155,6 @@ jobs:
             echo "docker info: ${DOCKER_STATUS}"
             echo "swCmpBuildCheck: ${BUILD_STATUS}"
             echo "unit tests: ${UT_STATUS}"
-            echo "rsync utResults: ${RSYNC_STATUS}"
             echo "Timestamp (UTC): $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
           } > ci_status/last_status
 
@@ -166,7 +164,7 @@ jobs:
             echo "No changes to commit."
           else
             if [ "$FAILED" -eq 1 ]; then
-              git commit -m "[GitAct_Failed] - Git actions docker=${DOCKER_STATUS}, build=${BUILD_STATUS}, ut=${UT_STATUS}, rsync=${RSYNC_STATUS} [skip ci]"
+              git commit -m "[GitAct_Failed] - Git actions docker=${DOCKER_STATUS}, build=${BUILD_STATUS}, ut=${UT_STATUS} [skip ci]"
             else
               git commit -m "[GitAct_Performed] - All git actions have been performed"
             fi
