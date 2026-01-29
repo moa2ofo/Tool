@@ -5,19 +5,19 @@
   :basename: test_Tool_Process.c
 :successes:
 - :test: test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2
-  :line: 48
+  :line: 44
   :message: ''
   :unity_test_time: 0
 - :test: test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2
-  :line: 69
+  :line: 65
   :message: ''
   :unity_test_time: 0
 - :test: test_Tool_Process_WhenNotRunModeWithNoData_ProcessesBuffer2
-  :line: 80
+  :line: 76
   :message: ''
   :unity_test_time: 0
 - :test: test_Tool_Process_WhenRunModeWithNoData_ProcessesBuffer2
-  :line: 90
+  :line: 86
   :message: ''
   :unity_test_time: 0
 :failures: []
@@ -28,4 +28,4 @@
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.01546013299957849
+:time: 0.000863758999997799

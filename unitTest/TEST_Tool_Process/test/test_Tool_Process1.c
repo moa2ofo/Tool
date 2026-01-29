@@ -6,9 +6,8 @@
 #include <string.h>
 
 /*==================[test helper functions]==================================*/
-static void Tool_Reset(uint8_t expectedMode_e, uint32_t expectedCount_u32, uint32_t expectedHead_u32, 
-                      uint32_t expectedTail_u32, uint32_t expectedStatusFlg_u32,
-                      const uint8_t *expectedBuf_pcu8, uint32_t expectedBufLen_u32) {
+static void Tool_Reset(uint8_t expectedMode_e, uint32_t expectedCount_u32, uint32_t expectedHead_u32, uint32_t expectedTail_u32, uint32_t expectedStatusFlg_u32, const uint8_t *expectedBuf_pcu8,
+                       uint32_t expectedBufLen_u32) {
   Mode_e = expectedMode_e;
   Count_u32 = expectedCount_u32;
   Head_u32 = expectedHead_u32;
@@ -19,9 +18,8 @@ static void Tool_Reset(uint8_t expectedMode_e, uint32_t expectedCount_u32, uint3
   }
 }
 
-static void Tool_AssertCheck(uint8_t expectedMode_e, uint32_t expectedCount_u32, uint32_t expectedHead_u32, 
-                      uint32_t expectedTail_u32, uint32_t expectedStatusFlg_u32,
-                      const uint8_t *expectedBuf_pcu8, uint32_t expectedBufLen_u32) {
+static void Tool_AssertCheck(uint8_t expectedMode_e, uint32_t expectedCount_u32, uint32_t expectedHead_u32, uint32_t expectedTail_u32, uint32_t expectedStatusFlg_u32, const uint8_t *expectedBuf_pcu8,
+                             uint32_t expectedBufLen_u32) {
   TEST_ASSERT_EQUAL_UINT32(expectedMode_e, Mode_e);
   TEST_ASSERT_EQUAL_UINT32(expectedCount_u32, Count_u32);
   TEST_ASSERT_EQUAL_UINT32(expectedHead_u32, Head_u32);
@@ -37,12 +35,10 @@ static void Tool_AssertCheck(uint8_t expectedMode_e, uint32_t expectedCount_u32,
 
 void setUp(void) {
   uint8_t l_Buffer_u8[TOOL_BUFFER_SIZE_U32] = {0};
-  Tool_Reset(Tool_modeIdle_e,0,0,0,0,l_Buffer_u8,TOOL_BUFFER_SIZE_U32);
+  Tool_Reset(Tool_modeIdle_e, 0, 0, 0, 0, l_Buffer_u8, TOOL_BUFFER_SIZE_U32);
 }
 
-void tearDown(void) { 
-  /* nothing */ 
-}
+void tearDown(void) { /* nothing */ }
 
 /*==================[test cases]=============================================*/
 void test_Tool_Process_WhenRunModeWithData_ProcessesBuffer(void) {

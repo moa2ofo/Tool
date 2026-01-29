@@ -86,10 +86,10 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
 int main(void)
 {
   UnityBegin("test_Tool_Process.c");
-  run_test(test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2", 48);
-  run_test(test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2", 69);
-  run_test(test_Tool_Process_WhenNotRunModeWithNoData_ProcessesBuffer2, "test_Tool_Process_WhenNotRunModeWithNoData_ProcessesBuffer2", 80);
-  run_test(test_Tool_Process_WhenRunModeWithNoData_ProcessesBuffer2, "test_Tool_Process_WhenRunModeWithNoData_ProcessesBuffer2", 90);
+  run_test(test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2", 44);
+  run_test(test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2, "test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2", 65);
+  run_test(test_Tool_Process_WhenNotRunModeWithNoData_ProcessesBuffer2, "test_Tool_Process_WhenNotRunModeWithNoData_ProcessesBuffer2", 76);
+  run_test(test_Tool_Process_WhenRunModeWithNoData_ProcessesBuffer2, "test_Tool_Process_WhenRunModeWithNoData_ProcessesBuffer2", 86);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();
