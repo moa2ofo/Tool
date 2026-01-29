@@ -97,19 +97,6 @@ jobs:
         run: |
           script -q -e -c "sudo -E python3 unitTestLauncher/unitTestsLauncher.py all" /dev/null
 
-      - name: Replace utResults with launcher results (robust)
-        id: replace_ut_results
-        if: always()
-        continue-on-error: true
-
-        run: |
-          sudo mkdir -p UnitTestResults
-
-          if [ -d "unitTestLauncher/utExecutionAndResults/utResults" ]; then
-            sudo rsync -a --delete unitTestLauncher/utExecutionAndResults/utResults/ UnitTestResults/
-          else
-            echo "No launcher utResults directory found; skipping rsync."
-          fi
 
       - name: Delete unitTestLauncher folder
         if: always()
