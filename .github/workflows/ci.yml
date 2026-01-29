@@ -80,12 +80,6 @@ jobs:
       # -----------------------------
       # Unit tests (always runs)
       # -----------------------------
-      - name: Fix permissions for unitTestLauncher workspace
-        id: fix_permissions
-        continue-on-error: true
-        run: |
-          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build
-          sudo chmod -R 777 unitTestLauncher/utExecutionAndResults
 
       - name: Run unit tests (launcher repo)
         id: unit_tests
@@ -93,19 +87,6 @@ jobs:
         run: |
           script -q -e -c "sudo -E python3 unitTestLauncher/unitTestsLauncher.py all" /dev/null
 
-      - name: Replace utResults with launcher results (robust)
-        id: replace_ut_results
-        if: always()
-        continue-on-error: true
-        run: |
-
-          mkdir -p utResults
-
-          if [ -d "unitTestLauncher/utExecutionAndResults/utResults" ]; then
-            rsync -a --delete unitTestLauncher/utExecutionAndResults/utResults/ UnitTestResults/
-          else
-            echo "No launcher utResults directory found; skipping rsync."
-          fi
       - name: Delete unitTestLauncher folder
         if: always()
         run: |
