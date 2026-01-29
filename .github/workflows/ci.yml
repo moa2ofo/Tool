@@ -80,6 +80,39 @@ jobs:
       # -----------------------------
       # Unit tests (always runs)
       # -----------------------------
+      - name: Fix permissions for unitTestLauncher workspace
+        id: fix_permissions
+        continue-on-error: true
+        run: |
+          # Crea la struttura base
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build
+
+          # Crea tutte le sottocartelle richieste
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/artifacts/gcov/gcovr
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/artifacts/test
+
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/gcov/dependencies
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/gcov/out/test_Tool_Clear
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/gcov/results
+
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/logs
+
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/test/cache
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/test/dependencies
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/test/mocks/test_Tool_Clear
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/test/out
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/test/preprocess/files/test_Tool_Clear/directives_only
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/test/preprocess/files/test_Tool_Clear/full_expansion
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/test/preprocess/includes/test_Tool_Clear
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/test/results
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/test/runners
+
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/vendor/cmock/src
+          sudo mkdir -p unitTestLauncher/utExecutionAndResults/utUnderTest/build/vendor/unity/src
+
+          # Applica i permessi a tutta la struttura
+          sudo chmod -R 777 unitTestLauncher/utExecutionAndResults
+
 
       - name: Run unit tests (launcher repo)
         id: unit_tests
@@ -87,6 +120,19 @@ jobs:
         run: |
           script -q -e -c "sudo -E python3 unitTestLauncher/unitTestsLauncher.py all" /dev/null
 
+      - name: Replace utResults with launcher results (robust)
+        id: replace_ut_results
+        if: always()
+        continue-on-error: true
+        run: |
+
+          mkdir -p utResults
+
+          if [ -d "unitTestLauncher/utExecutionAndResults/utResults" ]; then
+            rsync -a --delete unitTestLauncher/utExecutionAndResults/utResults/ UnitTestResults/
+          else
+            echo "No launcher utResults directory found; skipping rsync."
+          fi
       - name: Delete unitTestLauncher folder
         if: always()
         run: |
