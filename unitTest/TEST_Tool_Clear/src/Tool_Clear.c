@@ -11,6 +11,7 @@ uint32_t StatusFlg_u32 = 0;
 Tool_mode_e Mode_e = Tool_modeIdle_e;
 /* FUNCTION TO TEST */
 
+
 void Tool_Clear(void) {
   uint32_t l_index_u32;
 

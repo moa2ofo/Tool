@@ -1,0 +1,31 @@
+---
+:source:
+  :file: utExecutionAndResults/utUnderTest/test/test_Tool_Process.c
+  :dirname: utExecutionAndResults/utUnderTest/test
+  :basename: test_Tool_Process.c
+:successes:
+- :test: test_Tool_Process_WhenRunModeWithData_ProcessesBuffer2
+  :line: 44
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Tool_Process_WhenNotRunModeWithData_ProcessesBuffer2
+  :line: 65
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Tool_Process_WhenNotRunModeWithNoData_ProcessesBuffer2
+  :line: 76
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Tool_Process_WhenRunModeWithNoData_ProcessesBuffer2
+  :line: 86
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 4
+  :passed: 4
+  :failed: 0
+  :ignored: 0
+:stdout: []
+:time: 0.0009219530000024179
