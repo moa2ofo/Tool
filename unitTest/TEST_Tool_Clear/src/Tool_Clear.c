@@ -13,7 +13,7 @@ Tool_mode_e Mode_e = Tool_modeIdle_e;
 
 
 void Tool_Clear(void) {
-  uint32_t l_index_u32;
+  uint32_t l_index_u32; /**< Loop index for clearing the buffer */
 
   Head_u32 = 0U;
   Tail_u32 = 0U;
@@ -23,6 +23,7 @@ void Tool_Clear(void) {
     Buffer_u8[l_index_u32] = 0U;
   }
 
-  StatusFlg_u32 &= ~TOOL_STATUS_ERR_U32;
-  StatusFlg_u32 &= ~TOOL_STATUS_OVF_U32;
+  StatusFlg_u32 &= ~(TOOL_STATUS_ERR_U32 | TOOL_STATUS_OVF_U32);
+
+  /* Note: TOOL_STATUS_INIT_U32 flag is not modified as per specification */
 }

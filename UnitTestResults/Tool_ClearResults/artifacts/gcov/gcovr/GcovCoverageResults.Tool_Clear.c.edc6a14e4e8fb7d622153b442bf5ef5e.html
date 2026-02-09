@@ -27,7 +27,7 @@
     </tr>
     <tr>
       <th scope="row">Date:</th>
-      <td>2026-02-09 13:05:36</td>
+      <td>2026-02-09 13:17:19</td>
     </tr>
   </table>
 </div>
@@ -41,8 +41,8 @@
     </tr>
     <tr>
       <th scope="row">Lines:</th>
-      <td>9</td>
-      <td>9</td>
+      <td>8</td>
+      <td>8</td>
       <td class="coverage-high">100.0%</td>
     </tr>
     <tr>
@@ -224,7 +224,7 @@
       <td class="linebranch">
       </td>
       <td class="linecount "></td>
-      <td class="src "><span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">l_index_u32</span><span class="p">;</span></td>
+      <td class="src "><span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">l_index_u32</span><span class="p">;</span><span class="w"> </span><span class="cm">/**&lt; Loop index for clearing the buffer */</span></td>
     </tr>
 
     <tr class="source-line">
@@ -311,19 +311,27 @@
       <td class="linebranch">
       </td>
       <td class="linecount coveredLine">6</td>
-      <td class="src coveredLine"><span class="w">  </span><span class="n">StatusFlg_u32</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="o">~</span><span class="n">TOOL_STATUS_ERR_U32</span><span class="p">;</span></td>
+      <td class="src coveredLine"><span class="w">  </span><span class="n">StatusFlg_u32</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="o">~</span><span class="p">(</span><span class="n">TOOL_STATUS_ERR_U32</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">TOOL_STATUS_OVF_U32</span><span class="p">);</span></td>
     </tr>
 
     <tr class="source-line">
       <td class="lineno"><a id="l27" href="#l27">27</a></td>
       <td class="linebranch">
       </td>
-      <td class="linecount coveredLine">6</td>
-      <td class="src coveredLine"><span class="w">  </span><span class="n">StatusFlg_u32</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="o">~</span><span class="n">TOOL_STATUS_OVF_U32</span><span class="p">;</span></td>
+      <td class="linecount "></td>
+      <td class="src "></td>
     </tr>
 
     <tr class="source-line">
       <td class="lineno"><a id="l28" href="#l28">28</a></td>
+      <td class="linebranch">
+      </td>
+      <td class="linecount "></td>
+      <td class="src "><span class="w">  </span><span class="cm">/* Note: TOOL_STATUS_INIT_U32 flag is not modified as per specification */</span></td>
+    </tr>
+
+    <tr class="source-line">
+      <td class="lineno"><a id="l29" href="#l29">29</a></td>
       <td class="linebranch">
       </td>
       <td class="linecount coveredLine">6</td>
@@ -331,7 +339,7 @@
     </tr>
 
     <tr class="source-line">
-      <td class="lineno"><a id="l29" href="#l29">29</a></td>
+      <td class="lineno"><a id="l30" href="#l30">30</a></td>
       <td class="linebranch">
       </td>
       <td class="linecount "></td>
