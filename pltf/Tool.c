@@ -241,29 +241,25 @@ uint8_t Tool_RunTst_u8(void) {
  * /
 void Tool_Process(void)
 {
-    /* Function-static cycle counter increments each call and wraps naturally */
-    static uint32_t l_CycleCnt_u32 = 0U;
+  /* Function-static cycle counter increments each call and wraps naturally */
+  static uint32_t l_CycleCnt_u32 = 0U;
 
-    /* Loop counter for bounded iterations */
-    uint32_t l_iter_u32;
+  /* Loop counter for bounded iterations */
+  uint32_t l_iter_u32;
 
-    /* Temporary variable to hold popped byte from buffer */
-    uint8_t l_val_u8;
+  /* Temporary variable to hold popped byte from buffer */
+  uint8_t l_val_u8;
 
-    l_CycleCnt_u32++;
+  l_CycleCnt_u32++;
 
-    for (l_iter_u32 = 0U; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++)
-    {
-        if ((Mode_e == Tool_modeRun_e) && (Count_u32 != 0U))
-        {
-            Tool_Pop_u8(&l_val_u8);
-            l_val_u8 ^= (uint8_t)(l_CycleCnt_u32 & 0xFFU);
-            Tool_Push_u8(l_val_u8);
-        }
-        else
-        {
-            /* No operation to keep deterministic timing as per specification */
-        }
+  for(l_iter_u32 = 0U; l_iter_u32 < TOOL_BUFFER_SIZE_U32; l_iter_u32++) {
+    if((Mode_e == Tool_modeRun_e) && (Count_u32 != 0U)) {
+      Tool_Pop_u8(&l_val_u8);
+      l_val_u8 ^= (uint8_t)(l_CycleCnt_u32 & 0xFFU);
+      Tool_Push_u8(l_val_u8);
+    } else {
+      /* No operation to keep deterministic timing as per specification */
     }
+  }
 }
 /** @} */
